@@ -1,6 +1,6 @@
 # wakatobi
 
-Plugin name: **wakatobi**, alias: **web**
+Plugin name: **wakatobi**, alias: **wktb**
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/ardhi/wakatobi) ![NPM Version](https://img.shields.io/npm/v/wakatobi)
 
