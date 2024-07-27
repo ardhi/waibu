@@ -1,8 +1,8 @@
 import prepCrud from '../../../lib/prep-crud.js'
 
 async function update ({ coll, req, reply, id, body, options = {} }) {
-  this.app.bajo.getPlugin('bajoDb') // ensure bajoDb is loaded
-  const { recordUpdate, attachmentFind } = this.app.bajoDb
+  this.app.bajo.getPlugin('dobo') // ensure dobo is loaded
+  const { recordUpdate, attachmentFind } = this.app.dobo
   const { name, input, opts, recId } = prepCrud.call(this, { coll, req, body, id, options, args: ['coll', 'id'] })
   const ret = await recordUpdate(name, recId, input, opts)
   const { attachment, stats, mimeType } = req.query

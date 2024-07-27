@@ -1,8 +1,8 @@
 import prepCrud from '../../../lib/prep-crud.js'
 
 async function find ({ coll, req, reply, options = {} }) {
-  this.app.bajo.getPlugin('bajoDb') // ensure bajoDb is loaded
-  const { recordFind, attachmentFind } = this.app.bajoDb
+  this.app.bajo.getPlugin('dobo') // ensure dobo is loaded
+  const { recordFind, attachmentFind } = this.app.dobo
   const { name, opts } = prepCrud.call(this, { coll, req, options, args: ['coll'] })
   opts.bboxLatField = req.query[this.config.qsKey.bboxLatField]
   opts.bboxLngField = req.query[this.config.qsKey.bboxLngField]

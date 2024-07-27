@@ -1,8 +1,8 @@
 import prepCrud from '../../../lib/prep-crud.js'
 
 async function histogram ({ coll, req, reply, options = {} }) {
-  this.app.bajo.getPlugin('bajoDb') // ensure bajoDb is loaded
-  const { statHistogram } = this.app.bajoDb
+  this.app.bajo.getPlugin('dobo') // ensure dobo is loaded
+  const { statHistogram } = this.app.dobo
   const { name, opts } = prepCrud.call(this, { coll, req, options, args: ['coll'] })
   for (const item of ['type', 'group', 'aggregate']) {
     opts[item] = options[item] ?? req.params[item] ?? req.query[item]
