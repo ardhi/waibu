@@ -21,7 +21,7 @@
     "lang": "lang"
   },
   "paramsCharMap": {},
-  "dbColl": {
+  "dbModel": {
     "dataOnly": false,
     "count": false,
     "patchEnabled": false

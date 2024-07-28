@@ -1,9 +1,9 @@
 import prepCrud from '../../../lib/prep-crud.js'
 
-async function find ({ coll, req, reply, options = {} }) {
+async function find ({ model, req, reply, options = {} }) {
   this.app.bajo.getPlugin('dobo') // ensure dobo is loaded
   const { recordFind, attachmentFind } = this.app.dobo
-  const { name, opts } = prepCrud.call(this, { coll, req, options, args: ['coll'] })
+  const { name, opts } = prepCrud.call(this, { model, req, options, args: ['model'] })
   opts.bboxLatField = req.query[this.config.qsKey.bboxLatField]
   opts.bboxLngField = req.query[this.config.qsKey.bboxLngField]
   const filter = this.parseFilter(req)

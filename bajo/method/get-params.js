@@ -6,7 +6,7 @@ function getParams (req, ...items) {
   if (req.query.fields) fields = map((req.query.fields ?? '').split(','), i => trim(i))
   const params = {
     fields,
-    count: get(this, 'config.dbColl.count', false),
+    count: get(this, 'config.dbModel.count', false),
     body: req.body
   }
   items.forEach(i => {

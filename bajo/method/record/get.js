@@ -1,9 +1,9 @@
 import prepCrud from '../../../lib/prep-crud.js'
 
-async function get ({ coll, req, reply, id, options = {} }) {
+async function get ({ model, req, reply, id, options = {} }) {
   this.app.bajo.getPlugin('dobo') // ensure dobo is loaded
   const { recordGet, attachmentFind } = this.app.dobo
-  const { name, recId, opts } = prepCrud.call(this, { coll, req, id, options, args: ['coll', 'id'] })
+  const { name, recId, opts } = prepCrud.call(this, { model, req, id, options, args: ['model', 'id'] })
   opts.filter = this.parseFilter(req)
   const ret = await recordGet(name, recId, opts)
   const { attachment, stats, mimeType } = req.query
