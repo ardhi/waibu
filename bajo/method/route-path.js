@@ -1,7 +1,7 @@
 import qs from 'querystring'
 
-function routePath (name, { query = {}, base = 'wakatobiMpa', params = {} } = {}) {
-  // TODO: what if wakatobiMpa isn't loaded?
+function routePath (name, { query = {}, base = 'waibuMpa', params = {} } = {}) {
+  // TODO: what if waibuMpa isn't loaded?
   const { defaultsDeep } = this.app.bajo
   const { isEmpty, get } = this.app.bajo.lib._
   const { breakNsPath } = this.app.bajo

@@ -14,7 +14,7 @@ async function start () {
   const cfg = this.getConfig()
   cfg.factory.logger = this.app.bajoLogger.instance.child(
     {},
-    { msgPrefix: '[wakatobi] ' }
+    { msgPrefix: '[waibu] ' }
   )
   cfg.factory.genReqId = req => generateId()
   cfg.factory.disableRequestLogging = true
@@ -25,7 +25,7 @@ async function start () {
   instance.decorateRequest('site', null)
   this.instance = instance
   this.routes = this.routes || []
-  await runHook('wakatobi:afterCreateContext', instance)
+  await runHook('waibu:afterCreateContext', instance)
   await instance.register(sensible)
   if (cfg.underPressure) await instance.register(underPressure)
   if (cfg.noIcon) await instance.register(noIcon)

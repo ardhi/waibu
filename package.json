@@ -1,6 +1,6 @@
 {
-  "name": "wakatobi",
-  "version": "1.0.1",
+  "name": "waibu",
+  "version": "1.0.0",
   "description": "Web Framework for Bajo",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ardhi/wakatobi.git"
+    "url": "git+https://github.com/ardhi/waibu.git"
   },
   "keywords": [
     "web",
@@ -22,9 +22,9 @@
   "author": "Ardhi Lukianto <ardhi@lukianto.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ardhi/wakatobi/issues"
+    "url": "https://github.com/ardhi/waibu/issues"
   },
-  "homepage": "https://github.com/ardhi/wakatobi#readme",
+  "homepage": "https://github.com/ardhi/waibu#readme",
   "dependencies": {
     "@fastify/accepts": "^4.3.0",
     "@fastify/compress": "^7.0.3",
