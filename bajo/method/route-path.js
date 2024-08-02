@@ -1,16 +1,22 @@
 import qs from 'querystring'
 
-function routePath (name, { query = {}, base = 'waibuMpa', params = {} } = {}) {
-  // TODO: what if waibuMpa isn't loaded?
-  const { defaultsDeep } = this.app.bajo
+function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = {}) {
+  const { defaultsDeep, getPlugin } = this.app.bajo
   const { isEmpty, get } = this.app.bajo.lib._
   const { breakNsPath } = this.app.bajo
-  const cfg = this.app[base].config ?? {}
+
+  const plugin = getPlugin(base)
+  const cfg = plugin.config ?? {}
   let ns
+  let subNs
   let fullPath
   if (name.startsWith('/')) fullPath = name
-  else [ns, fullPath] = breakNsPath(name)
+  else [ns, fullPath, subNs] = breakNsPath(name)
+  if (fullPath.includes('//')) return fullPath
+  if (subNs === 'virtual') return `${this.app.waibuStatic.virtualDir(ns)}${fullPath}`
+  if (subNs === 'asset') return `${this.app.waibuStatic.assetDir(ns)}${fullPath}`
   let [path, queryString] = fullPath.split('?')
+
   path = path.split('/').map(p => {
     return p[0] === ':' && params[p.slice(1)] ? params[p.slice(1)] : p
   }).join('/')
