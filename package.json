@@ -42,6 +42,7 @@
     "@fastify/static": "github:ardhi/fastify-static#v7.x",
     "@fastify/under-pressure": "^8.5.1",
     "fastify": "^4.28.1",
-    "fastify-no-icon": "^6.0.0"
+    "fastify-no-icon": "^6.0.0",
+    "query-string": "^9.1.0"
   }
 }
