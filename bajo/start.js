@@ -18,6 +18,7 @@ async function start () {
   )
   cfg.factory.genReqId = req => generateId()
   cfg.factory.disableRequestLogging = true
+  cfg.factory.querystringParser = str => this.qs.parse(str)
 
   const instance = fastify(cfg.factory)
   instance.decorateRequest('lang', null)
