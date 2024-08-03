@@ -1,5 +1,3 @@
-import qs from 'querystring'
-
 function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = {}) {
   const { defaultsDeep, getPlugin } = this.app.bajo
   const { isEmpty, get } = this.app.bajo.lib._
@@ -23,8 +21,8 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   let url = path
   const langDetector = get(cfg, 'i18n.detectors', [])
   if (ns) url = langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(ns)}${path}` : `${this.routeDir(ns)}${path}`
-  queryString = defaultsDeep(query, qs.parse(queryString))
-  if (!isEmpty(queryString)) url += '?' + qs.stringify(queryString)
+  queryString = defaultsDeep(query, this.qs.parse(queryString))
+  if (!isEmpty(queryString)) url += '?' + this.qs.stringify(queryString)
   return url
 }
 
