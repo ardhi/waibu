@@ -24,6 +24,7 @@ async function start () {
   instance.decorateRequest('lang', null)
   instance.decorateRequest('langDetector', null)
   instance.decorateRequest('site', null)
+  instance.decorateRequest('ns', null)
   this.instance = instance
   this.routes = this.routes || []
   await runHook('waibu:afterCreateContext', instance)

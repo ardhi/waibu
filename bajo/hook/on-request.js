@@ -1,7 +1,10 @@
 const onRequest = {
   level: 5,
   handler: async function onRequest (ctx, req, reply) {
+    const { get } = this.app.bajo.lib._
+
     req.site = this.config.siteInfo
+    req.ns = get(reply.request, 'routeOptions.config.ns')
     let msg = '< %s:%s from IP %s'
     if (req.headers['content-length']) msg += ', content length: %s'
     this.log.info(msg, req.method, req.url, this.getIp(req), req.headers['content-length'])
