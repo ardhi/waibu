@@ -8,7 +8,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   let ns
   let subNs
   let fullPath
-  if (name.startsWith('/')) fullPath = name
+  if (['/', '?', '#'].includes(name.slice(0, 1))) fullPath = name
   else [ns, fullPath, subNs] = breakNsPath(name)
   if (fullPath.includes('//')) return fullPath
   if (subNs === 'virtual') return `${this.app.waibuStatic.virtualDir(ns)}${fullPath}`
