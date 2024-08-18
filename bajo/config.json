@@ -7,6 +7,7 @@
   "factory": {
     "trustProxy": true
   },
+  "prefixVirtual": "~",
   "qsKey": {
     "bbox": "bbox",
     "bboxLatField": "bboxLatField",

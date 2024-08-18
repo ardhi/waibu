@@ -5,24 +5,22 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
 
   const plugin = getPlugin(base)
   const cfg = plugin.config ?? {}
-  let ns
-  let subNs
-  let fullPath
-  if (['/', '?', '#'].includes(name.slice(0, 1))) fullPath = name
-  else [ns, fullPath, subNs] = breakNsPath(name)
-  if (fullPath.includes('//')) return fullPath
-  if (subNs === 'virtual') return `${this.app.waibuStatic.virtualDir(ns)}${fullPath}`
-  if (subNs === 'asset') return `${this.app.waibuStatic.assetDir(ns)}${fullPath}`
-  let [path, queryString] = fullPath.split('?')
+  let info = {}
+  if (['/', '?', '#'].includes(name.slice(0, 1)) || name.slice(1, 2) === ':') info.path = name
+  else {
+    info = breakNsPath(name)
+  }
+  if (this.routePathHandlers[info.subNs]) return this.routePathHandlers[info.subNs](name)
+  if (info.path.includes('//')) return info.path
 
-  path = path.split('/').map(p => {
+  info.path = info.path.split('/').map(p => {
     return p[0] === ':' && params[p.slice(1)] ? params[p.slice(1)] : p
   }).join('/')
-  let url = path
+  let url = info.path
   const langDetector = get(cfg, 'i18n.detectors', [])
-  if (ns) url = langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(ns)}${path}` : `${this.routeDir(ns)}${path}`
-  queryString = defaultsDeep(query, this.qs.parse(queryString))
-  if (!isEmpty(queryString)) url += '?' + this.qs.stringify(queryString)
+  if (info.ns) url = langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`
+  info.qs = defaultsDeep({}, query, info.qs)
+  if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
   return url
 }
 
