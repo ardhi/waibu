@@ -1,6 +1,6 @@
 const onRequest = {
   level: 5,
-  handler: async function onRequest (ctx, req, reply) {
+  handler: async function onRequest (req, reply) {
     const { get } = this.app.bajo.lib._
 
     req.site = this.config.siteInfo

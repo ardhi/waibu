@@ -1,6 +1,6 @@
 const onResponse = {
   level: 5,
-  handler: async function onResponse (ctx, req, reply) {
+  handler: async function onResponse (req, reply) {
     let method = 'info'
     if (reply.statusCode >= 300 && reply.statusCode < 400) method = 'warn'
     else if (reply.statusCode >= 400) method = 'error'
