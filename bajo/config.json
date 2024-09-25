@@ -1,5 +1,5 @@
 {
-  "alias": "wb",
+  "alias": "w",
   "server": {
     "host": "localhost",
     "port": 7777
@@ -22,11 +22,6 @@
     "lang": "lang"
   },
   "paramsCharMap": {},
-  "dbModel": {
-    "dataOnly": false,
-    "count": false,
-    "patchEnabled": false
-  },
   "logRoutes": false,
   "siteInfo": {
     "title": "My Website",
