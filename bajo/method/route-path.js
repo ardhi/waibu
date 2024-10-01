@@ -6,11 +6,12 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   const plugin = getPlugin(base)
   const cfg = plugin.config ?? {}
   let info = {}
-  if (['/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
+  if (['.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
   else if (['~'].includes(name[0])) info.path = name.slice(1)
   else {
     info = breakNsPath(name)
   }
+  if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
   if (this.routePathHandlers[info.subNs]) return this.routePathHandlers[info.subNs](name)
   if (info.path.includes('//')) return info.path
 
