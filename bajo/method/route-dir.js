@@ -3,7 +3,7 @@ function routeDir (ns, base) {
   const cfg = this.app[base].config
   const dir = cfg.prefix === '' ? '' : `/${cfg.prefix || this.app[base].alias}`
   if (!ns) return dir
-  if (ns === base || (ns === this.app.bajo.mainNs && cfg.mountAppAsRoot)) return dir
+  if (ns === base || (ns === this.app.bajo.mainNs && cfg.mountMainAsRoot)) return dir
   return dir + '/' + this.app[ns].alias
 }
 
