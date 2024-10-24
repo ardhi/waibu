@@ -9,6 +9,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   if (['.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
   else if (['~'].includes(name[0])) info.path = name.slice(1)
   else {
+    console.log('---', name)
     info = breakNsPath(name)
   }
   if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
