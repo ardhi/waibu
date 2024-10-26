@@ -1,5 +1,5 @@
 function notFound (name, options) {
-  throw this.error('notfound', { path: name })
+  throw this.error('notFound', { path: name })
 }
 
 export default notFound

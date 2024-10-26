@@ -1,6 +1,6 @@
 function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = {}) {
   const { defaultsDeep, getPlugin } = this.app.bajo
-  const { isEmpty, get } = this.app.bajo.lib._
+  const { isEmpty, get, trimEnd } = this.app.bajo.lib._
   const { breakNsPath } = this.app.bajo
 
   const plugin = getPlugin(base)
@@ -9,7 +9,6 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   if (['.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
   else if (['~'].includes(name[0])) info.path = name.slice(1)
   else {
-    console.log('---', name)
     info = breakNsPath(name)
   }
   if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
@@ -21,7 +20,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   }).join('/')
   let url = info.path
   const langDetector = get(cfg, 'i18n.detectors', [])
-  if (info.ns) url = langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`
+  if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
   info.qs = defaultsDeep({}, query, info.qs)
   if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
   return url
