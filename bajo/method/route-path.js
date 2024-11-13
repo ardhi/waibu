@@ -1,6 +1,6 @@
-function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = {}) {
+function routePath (name = '', { query = {}, base = 'waibuMpa', params = {}, guessHost } = {}) {
   const { defaultsDeep, getPlugin } = this.app.bajo
-  const { isEmpty, get, trimEnd } = this.app.bajo.lib._
+  const { isEmpty, get, trimEnd, trimStart } = this.app.bajo.lib._
   const { breakNsPath } = this.app.bajo
 
   const plugin = getPlugin(base)
@@ -23,6 +23,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {} } = 
   if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
   info.qs = defaultsDeep({}, query, info.qs)
   if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
+  if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
   return url
 }
 
