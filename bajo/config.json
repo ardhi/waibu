@@ -4,7 +4,8 @@
     "port": 7777
   },
   "factory": {
-    "trustProxy": true
+    "trustProxy": true,
+    "bodyLimit": 10485760
   },
   "prefixVirtual": "~",
   "qsKey": {
