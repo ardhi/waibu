@@ -12,7 +12,7 @@ import handleRedirect from '../lib/handle-redirect.js'
 async function start () {
   const { generateId, runHook } = this.app.bajo
   const cfg = this.getConfig()
-  cfg.factory.logger = this.app.bajoLogger.instance.child(
+  cfg.factory.loggerInstance = this.app.bajoLogger.instance.child(
     {},
     { msgPrefix: '[waibu] ' }
   )
