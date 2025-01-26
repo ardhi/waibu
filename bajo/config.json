@@ -38,6 +38,5 @@
   "underPressure": false,
   "forwardOpts": {
     "disableRequestLogging": true
-  },
-  "dependencies": ["bajo-logger"]
+  }
 }
