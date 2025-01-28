@@ -5,7 +5,9 @@ function routeDir (ns, base) {
   const prefix = get(cfg, 'waibu.prefix', this.app[base].alias)
   const dir = prefix === '' ? '' : `/${prefix}`
   if (!ns) return dir
-  if (ns === base || (ns === this.app.bajo.mainNs && cfg.mountMainAsRoot)) return dir
+  const cfgMpa = get(this, 'app.waibuMpa.config')
+  if (ns === this.app.bajo.mainNs && cfgMpa.mountMainAsRoot) return ''
+  if (ns === base) return dir
   return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
 }
 
