@@ -31,7 +31,7 @@
   "Too Many Requests": "",
   "Request Header Fields Too Large": "",
   "Unavailable For Legal Reasons": "",
-  "Internal Server Error": "",
+  "Internal Server Error": "Kesalahan Internal Server",
   "Not Implemented": "",
   "Bad Gateway": "",
   "Service Unavailable": "",
