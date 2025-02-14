@@ -7,7 +7,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {}, gue
   const cfg = plugin.config ?? {}
   let info = {}
   if (name.startsWith('mailto:') || name.startsWith('tel:')) return name
-  if (['.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
+  if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
   else if (['~'].includes(name[0])) info.path = name.slice(1)
   else {
     info = breakNsPath(name)
