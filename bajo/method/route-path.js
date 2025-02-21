@@ -20,7 +20,7 @@ function routePath (name = '', { query = {}, base = 'waibuMpa', params = {}, gue
     return p[0] === ':' && params[p.slice(1)] ? params[p.slice(1)] : p
   }).join('/')
   let url = info.path
-  const langDetector = get(cfg, 'i18n.detectors', [])
+  const langDetector = get(cfg, 'intl.detectors', [])
   if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
   info.qs = defaultsDeep({}, query, info.qs)
   if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)

@@ -22,8 +22,8 @@ async function start () {
 
   const instance = fastify(cfg.factory)
   instance.decorateRequest('lang', null)
-  instance.decorateRequest('i18n', null)
   instance.decorateRequest('t', () => {})
+  instance.decorateRequest('format', () => {})
   instance.decorateRequest('langDetector', null)
   instance.decorateRequest('site', null)
   instance.decorateRequest('ns', null)
