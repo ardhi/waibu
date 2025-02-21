@@ -1,0 +1,14 @@
+{
+  "pluginPrefixConflic%s%s%s": "Plugin prefix '%s' conflict between '%s' and '%s'",
+  "serverIs%s": "Server is %s",
+  "closedL": "closed",
+  "readyL": "ready",
+  "allRoutesConfigDisabled%s": "All '%s' routes are disabled by config",
+  "bootApp%s": "Boot app: %s",
+  "cantParseXmlBodyWithout%s": "Can't parse XML body unless package '%s' is loaded first",
+  "routesL": "routes",
+  "routeDisabled%s%s": "Route %s (%s) is disabled",
+  "rerouted%s%s": "Rerouted %s -> %s",
+  "bootSubApp%s": "Boot sub app: %s",
+  "routeNotFound%s%s": "Route '%s (%s)' not found"
+}

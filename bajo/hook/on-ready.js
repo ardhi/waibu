@@ -1,5 +1,5 @@
 async function onReady () {
-  this.log.info('Server is ready!')
+  this.log.info('serverIs%s', this.print.write('readyL'))
 }
 
 export default onReady
