@@ -10,5 +10,6 @@
   "routeDisabled%s%s": "Jalur %s (%s) dimatikan",
   "rerouted%s%s": "Jalur dipindahkan %s -> %s",
   "bootSubApp%s": "Boot sub app: %s",
-  "routeNotFound%s%s": "Jalur '%s (%s)' tidak ditemukan"
+  "routeNotFound%s%s": "Jalur '%s (%s)' tidak ditemukan",
+  "middlewareDisabled%s": "Middleware '%s' dimatikan"
 }

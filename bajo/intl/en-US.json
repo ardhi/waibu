@@ -10,5 +10,6 @@
   "routeDisabled%s%s": "Route %s (%s) is disabled",
   "rerouted%s%s": "Rerouted %s -> %s",
   "bootSubApp%s": "Boot sub app: %s",
-  "routeNotFound%s%s": "Route '%s (%s)' not found"
+  "routeNotFound%s%s": "Route '%s (%s)' not found",
+  "middlewareDisabled%s": "Middleware '%s' is disabled"
 }

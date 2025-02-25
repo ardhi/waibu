@@ -27,6 +27,10 @@
     "title": "My Website",
     "orgName": "My Organization"
   },
+  "cors": {},
+  "compress": {},
+  "helmet": {},
+  "rateLimit": {},
   "multipart": {
     "attachFieldsToBody": true,
     "limits": {
