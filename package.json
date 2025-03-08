@@ -1,6 +1,6 @@
 {
   "name": "waibu",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Web Framework for Bajo",
   "main": "index.js",
   "scripts": {
@@ -39,10 +39,10 @@
     "@fastify/reply-from": "^12.0.1",
     "@fastify/sensible": "^6.0.2",
     "@fastify/session": "^11.1.0",
-    "@fastify/static": "^8.0.4",
     "@fastify/under-pressure": "^9.0.3",
     "fastify": "^5.2.1",
     "fastify-no-icon": "^7.0.0",
-    "query-string": "^9.1.1"
+    "query-string": "^9.1.1",
+    "waibu-fastify-static": "^1.1.0"
   }
 }

@@ -4,10 +4,11 @@ const onRequest = {
     const { get } = this.app.bajo.lib._
 
     req.site = this.config.siteInfo
-    req.ns = get(reply.request, 'routeOptions.config.ns')
+    req.ns = get(reply.request, 'routeOptions.config.ns') ?? this.name
+    const ns = get(reply.request, 'routeOptions.config.webApp') ?? this.name
     let msg = '< %s:%s from IP %s'
     if (req.headers['content-length']) msg += ', content length: %s'
-    this.log.info(msg, req.method, req.url, this.getIp(req), req.headers['content-length'])
+    this.app[ns].log.info(msg, req.method, req.url, this.getIp(req), req.headers['content-length'])
     if (Object.keys(this.config.paramsCharMap).length === 0) return
     for (const key in req.params) {
       let val = req.params[key]
