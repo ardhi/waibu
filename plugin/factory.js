@@ -235,7 +235,7 @@ async function factory (pkgName) {
       return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
     }
 
-    routePath = (name = '', { query = {}, base = 'waibuMpa', params = {}, guessHost } = {}) => {
+    routePath = (name = '', { query = {}, base = 'waibu', params = {}, guessHost } = {}) => {
       const { defaultsDeep, getPlugin } = this.app.bajo
       const { isEmpty, get, trimEnd, trimStart } = this.app.bajo.lib._
       const { breakNsPath } = this.app.bajo
