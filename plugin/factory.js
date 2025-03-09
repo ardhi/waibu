@@ -235,10 +235,11 @@ async function factory (pkgName) {
       return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
     }
 
-    routePath = (name = '', { query = {}, base = 'waibu', params = {}, guessHost } = {}) => {
+    routePath = (name = '', options = {}) => {
       const { defaultsDeep, getPlugin } = this.app.bajo
       const { isEmpty, get, trimEnd, trimStart } = this.app.bajo.lib._
       const { breakNsPath } = this.app.bajo
+      const { query = {}, base = 'waibu', params = {}, guessHost } = options
 
       const plugin = getPlugin(base)
       const cfg = plugin.config ?? {}
@@ -250,7 +251,7 @@ async function factory (pkgName) {
         info = breakNsPath(name)
       }
       if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
-      if (this.routePathHandlers[info.subNs]) return this.routePathHandlers[info.subNs](name)
+      if (this.routePathHandlers[info.subNs]) return this.routePathHandlers[info.subNs].handler(name, options)
       if (info.path.includes('//')) return info.path
 
       info.path = info.path.split('/').map(p => {
