@@ -1,7 +1,7 @@
 const onResponse = {
   level: 5,
   handler: async function onResponse (req, reply) {
-    const { get } = this.app.bajo.lib._
+    const { get } = this.lib._
     let method = 'info'
     if (reply.statusCode >= 300 && reply.statusCode < 400) method = 'warn'
     else if (reply.statusCode >= 400) method = 'error'

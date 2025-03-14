@@ -44,7 +44,7 @@ async function factory (pkgName) {
           lang: 'lang'
         },
         paramsCharMap: {},
-        logRoutes: false,
+        logRoutes: true,
         siteInfo: {
           title: 'My Website',
           orgName: 'My Organization'
@@ -129,8 +129,21 @@ async function factory (pkgName) {
       this.instance.close()
     }
 
+    findRoute (route) {
+      const { outmatch } = this.lib
+      const { find } = this.lib._
+      const { breakNsPath } = this.app.bajo
+      const { ns, subNs = '', path } = breakNsPath(route)
+      return find(this.routes, r => {
+        r.config = r.config ?? {}
+        const match = outmatch(r.config.pathSrc ?? r.path, { separator: false })
+        if (!match(path)) return false
+        return ns === r.config.ns && r.config.subNs === subNs
+      })
+    }
+
     escape = (text) => {
-      const { forOwn } = this.app.bajo.lib._
+      const { forOwn } = this.lib._
       forOwn(this.escapeChars, (v, k) => {
         text = text.replaceAll(k, v)
       })
@@ -160,7 +173,7 @@ async function factory (pkgName) {
     }
 
     getPluginByPrefix = (prefix) => {
-      const { get } = this.app.bajo.lib._
+      const { get } = this.lib._
       let plugin
       for (const p of this.app.bajo.pluginNames) {
         if (get(this, `app.${p}.config.waibu.prefix`) === prefix) {
@@ -172,7 +185,7 @@ async function factory (pkgName) {
     }
 
     getPluginPrefix = (base, webApp = 'waibuMpa') => {
-      const { get, trim } = this.app.bajo.lib._
+      const { get, trim } = this.lib._
       let prefix = get(this, `app.${base}.config.waibu.prefix`, this.app[base].alias)
       if (base === 'main') {
         const cfg = this.app[webApp].config
@@ -183,7 +196,7 @@ async function factory (pkgName) {
     }
 
     getRoutes = (grouped, lite) => {
-      const { groupBy, orderBy, mapValues, map, pick } = this.app.bajo.lib._
+      const { groupBy, orderBy, mapValues, map, pick } = this.lib._
       const all = this.routes
       let routes
       if (grouped) {
@@ -196,7 +209,7 @@ async function factory (pkgName) {
 
     getUploadedFiles = async (reqId, fileUrl, returnDir) => {
       const { getPluginDataDir, resolvePath } = this.app.bajo
-      const { fastGlob } = this.app.bajo.lib
+      const { fastGlob } = this.lib
       const dir = `${getPluginDataDir(this.name)}/upload/${reqId}`
       const result = await fastGlob(`${dir}/*`)
       if (!fileUrl) return returnDir ? { dir, files: result } : result
@@ -205,7 +218,7 @@ async function factory (pkgName) {
     }
 
     isIntlPath = (ns) => {
-      const { get } = this.app.bajo.lib._
+      const { get } = this.lib._
       return get(this.app[ns], 'config.intl.detectors', []).includes('path')
     }
 
@@ -223,7 +236,7 @@ async function factory (pkgName) {
     }
 
     routeDir = (ns, base) => {
-      const { get } = this.app.bajo.lib._
+      const { get } = this.lib._
       if (!base) base = ns
       const cfg = this.app[base].config
       const prefix = get(cfg, 'waibu.prefix', this.app[base].alias)
@@ -237,7 +250,7 @@ async function factory (pkgName) {
 
     routePath = (name = '', options = {}) => {
       const { defaultsDeep, getPlugin } = this.app.bajo
-      const { isEmpty, get, trimEnd, trimStart } = this.app.bajo.lib._
+      const { isEmpty, get, trimEnd, trimStart } = this.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, base = 'waibu', params = {}, guessHost } = options
 
@@ -268,7 +281,7 @@ async function factory (pkgName) {
 
     sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, options = {} }) => {
       if (!this.app.masohiMail) return
-      const { get, isString } = this.app.bajo.lib._
+      const { get, isString } = this.lib._
       const { generateId } = this.app.bajo
       const { render } = this.app.bajoTemplate
       if (isString(tpl)) tpl = [tpl]
@@ -294,7 +307,7 @@ async function factory (pkgName) {
     }
 
     unescape = (text) => {
-      const { forOwn, invert } = this.app.bajo.lib._
+      const { forOwn, invert } = this.lib._
       const mapping = invert(this.escapeChars)
       forOwn(mapping, (v, k) => {
         text = text.replaceAll(k, v)

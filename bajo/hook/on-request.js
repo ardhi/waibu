@@ -1,7 +1,7 @@
 const onRequest = {
   level: 5,
   handler: async function onRequest (req, reply) {
-    const { get } = this.app.bajo.lib._
+    const { get } = this.lib._
 
     req.site = this.config.siteInfo
     req.ns = get(reply.request, 'routeOptions.config.ns') ?? this.name
