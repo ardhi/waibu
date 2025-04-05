@@ -292,7 +292,8 @@ async function factory (pkgName) {
       }
       const message = await render(tpl[0], locals, opts)
       if (tpl[1]) opts.messageText = await render(tpl[1], locals, opts)
-      await this.app.masohi.send({ to, cc, bcc, from, subject, message, conn, options: opts })
+      const payload = { type: 'object', data: { to, cc, bcc, from, subject, message, conn, options: opts } }
+      await this.app.masohi.send({ payload, source: this.name }, false) // mail sent through worker
     }
 
     unescapeBlock = (content, start, end, startReplacer, endReplacer) => {
