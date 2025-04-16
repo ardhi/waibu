@@ -142,7 +142,8 @@ async function factory (pkgName) {
       })
     }
 
-    escape = (text) => {
+    escape = (text = '') => {
+      if (typeof text !== 'string') return text
       const { forOwn } = this.lib._
       forOwn(this.escapeChars, (v, k) => {
         text = text.replaceAll(k, v)
