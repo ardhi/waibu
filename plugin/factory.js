@@ -174,15 +174,12 @@ async function factory (pkgName) {
     }
 
     getPluginByPrefix = (prefix) => {
-      const { get } = this.lib._
-      let plugin
-      for (const p of this.app.bajo.pluginNames) {
-        if (get(this, `app.${p}.config.waibu.prefix`) === prefix) {
-          plugin = this.app[p]
-          break
-        }
-      }
-      return plugin
+      const { get, find } = this.lib._
+      const item = find(this.app.waibu.routes, r => {
+        return get(r, 'config.prefix') === prefix
+      })
+      const ns = get(item, 'config.ns')
+      if (ns) return this.app[ns]
     }
 
     getPluginPrefix = (base, webApp = 'waibuMpa') => {
