@@ -27,7 +27,8 @@ async function factory (pkgName) {
         },
         factory: {
           trustProxy: true,
-          bodyLimit: 10485760
+          bodyLimit: 10485760,
+          pluginTimeout: 30000
         },
         prefixVirtual: '~',
         qsKey: {
