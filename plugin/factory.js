@@ -136,6 +136,7 @@ async function factory (pkgName) {
       const { breakNsPath } = this.app.bajo
       const { ns, subNs = '', path } = breakNsPath(route)
       return find(this.routes, r => {
+        if (r.path.startsWith('*')) return false
         r.config = r.config ?? {}
         const match = outmatch(r.config.pathSrc ?? r.path, { separator: false })
         if (!match(path)) return false
