@@ -273,6 +273,7 @@ async function factory (pkgName) {
       let url = info.path
       const langDetector = get(cfg, 'intl.detectors', [])
       if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
+      url = url.split('/').map(u => encodeURI(u)).join('/')
       info.qs = defaultsDeep({}, query, info.qs)
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
       if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
