@@ -1,6 +1,6 @@
 {
   "name": "waibu",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "Web Framework for Bajo",
   "main": "index.js",
   "scripts": {
