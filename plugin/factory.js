@@ -249,7 +249,8 @@ async function factory (pkgName) {
     }
 
     routePath = (name = '', options = {}) => {
-      const { defaultsDeep, getPlugin } = this.app.bajo
+      const { getPlugin } = this.app.bajo
+      const { defaultsDeep } = this.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, base = 'waibu', params = {}, guessHost } = options
@@ -298,7 +299,7 @@ async function factory (pkgName) {
     }
 
     unescapeBlock = (content, start, end, startReplacer, endReplacer) => {
-      const { extractText } = this.app.bajo
+      const { extractText } = this.lib.aneka
       const { result } = extractText(content, start, end)
       if (result.length === 0) return content
       const unescaped = this.unescape(result)
