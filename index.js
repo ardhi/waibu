@@ -1,15 +1,15 @@
-import collectRoutePathHandlers from '../lib/collect-route-path-handlers.js'
+import collectRoutePathHandlers from './lib/collect-route-path-handlers.js'
 import fastify from 'fastify'
-import appHook from '../lib/app-hook.js'
-import routeHook from '../lib/webapp-scope/route-hook.js'
-import logRoutes from '../lib/log-routes.js'
-import { boot } from '../lib/app.js'
+import appHook from './lib/app-hook.js'
+import routeHook from './lib/webapp-scope/route-hook.js'
+import logRoutes from './lib/log-routes.js'
+import { boot } from './lib/app.js'
 import sensible from '@fastify/sensible'
 import noIcon from 'fastify-no-icon'
 import underPressure from '@fastify/under-pressure'
-import handleForward from '../lib/handle-forward.js'
-import handleRedirect from '../lib/handle-redirect.js'
-import buildLocals from '../lib/build-locals.js'
+import handleForward from './lib/handle-forward.js'
+import handleRedirect from './lib/handle-redirect.js'
+import buildLocals from './lib/build-locals.js'
 import queryString from 'query-string'
 
 async function factory (pkgName) {
@@ -64,7 +64,15 @@ async function factory (pkgName) {
         noIcon: true,
         underPressure: false,
         forwardOpts: {
-          disableRequestLogging: true
+          disableRequestLogging: true,
+          undici: {
+            connections: 128,
+            pipelining: 1,
+            keepAliveTimeout: 60 * 1000,
+            tls: {
+              rejectUnauthorized: false
+            }
+          }
         }
       }
       this.escapeChars = {
