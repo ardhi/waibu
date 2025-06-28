@@ -22,7 +22,7 @@ async function factory (pkgName) {
       this.dependencies = ['bajo-logger', 'bajo-extra']
       this.config = {
         server: {
-          host: '127.0.0.1',
+          host: '0.0.0.0',
           port: 7771
         },
         factory: {
@@ -142,7 +142,9 @@ async function factory (pkgName) {
       const { outmatch } = this.lib
       const { find } = this.lib._
       const { breakNsPath } = this.app.bajo
-      const { ns, subNs = '', path } = breakNsPath(route)
+      let { ns, subNs = '', path } = breakNsPath(route)
+      const params = path.split('|')
+      if (params.length > 1) path = params[0]
       return find(this.routes, r => {
         if (r.path.startsWith('*')) return false
         r.config = r.config ?? {}
