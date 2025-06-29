@@ -138,7 +138,7 @@ async function factory (pkgName) {
       this.instance.close()
     }
 
-    findRoute (route) {
+    findRoute = (route) => {
       const { outmatch } = this.lib
       const { find } = this.lib._
       const { breakNsPath } = this.app.bajo
@@ -291,8 +291,9 @@ async function factory (pkgName) {
       return url
     }
 
-    sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, options = {} }) => {
-      if (!this.app.masohiMail) return
+    sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, source, options = {} }) => {
+      conn = conn ?? 'masohiMail:default'
+      if (!this.app.masohi || !this.app.masohiMail) return
       const { get, isString } = this.lib._
       const { generateId } = this.app.bajo
       const { render } = this.app.bajoTemplate
@@ -304,8 +305,8 @@ async function factory (pkgName) {
       }
       const message = await render(tpl[0], locals, opts)
       if (tpl[1]) opts.messageText = await render(tpl[1], locals, opts)
-      const payload = { type: 'object', data: { to, cc, bcc, from, subject, message, conn, options: opts } }
-      await this.app.masohi.send({ payload, source: this.name }, false) // mail sent through worker
+      const payload = { type: 'object', data: { to, cc, bcc, from, subject, message, options: opts } }
+      await this.app.masohi.send({ payload, source: source ?? this.name, conn }) // mail sent through worker
     }
 
     unescapeBlock = (content, start, end, startReplacer, endReplacer) => {
