@@ -22,7 +22,7 @@ async function factory (pkgName) {
       this.dependencies = ['bajo-logger', 'bajo-extra']
       this.config = {
         server: {
-          host: '0.0.0.0',
+          host: '127.0.0.1',
           port: 7771
         },
         factory: {
@@ -183,6 +183,13 @@ async function factory (pkgName) {
       let fwd = req.headers['x-forwarded-for'] ?? ''
       if (!Array.isArray(fwd)) fwd = fwd.split(',').map(ip => ip.trim())
       return fwd[0] ?? req.ip
+    }
+
+    getOrigin = (req) => {
+      const { isEmpty } = this.lib._
+      let host = req.host
+      if (isEmpty(host) || host === ':authority') host = `${this.config.server.host}:${this.config.server.port}`
+      return `${req.protocol}://${host}`
     }
 
     getPluginByPrefix = (prefix) => {
