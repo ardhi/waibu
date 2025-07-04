@@ -22,7 +22,7 @@ async function factory (pkgName) {
       this.dependencies = ['bajo-logger', 'bajo-extra']
       this.config = {
         server: {
-          address: '127.0.0.1',
+          host: '127.0.0.1',
           port: 7771
         },
         factory: {
@@ -188,7 +188,7 @@ async function factory (pkgName) {
     getOrigin = (req) => {
       const { isEmpty } = this.lib._
       let host = req.host
-      if (isEmpty(host) || host === ':authority') host = `${this.config.server.address}:${this.config.server.port}`
+      if (isEmpty(host) || host === ':authority') host = `${this.config.server.host}:${this.config.server.port}`
       return `${req.protocol}://${host}`
     }
 
@@ -294,7 +294,7 @@ async function factory (pkgName) {
       if (options.uriEncoded) url = url.split('/').map(u => encodeURI(u)).join('/')
       info.qs = defaultsDeep({}, query, info.qs)
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
-      if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.address}:${this.config.server.port}/${trimStart(url, '/')}`
+      if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
       return url
     }
 
