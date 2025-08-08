@@ -11,5 +11,8 @@
   "rerouted%s%s": "Jalur dipindahkan %s -> %s",
   "bootSubApp%s": "Boot sub app: %s",
   "routeNotFound%s%s": "Jalur '%s (%s)' tidak ditemukan",
-  "middlewareDisabled%s": "Middleware '%s' dimatikan"
+  "middlewareDisabled%s": "Middleware '%s' dimatikan",
+  "httpResp%s%s%s%s%s": "%s %s:%s dengan status %s selama %sms",
+  "httpReq%s%s%s%s": "%s %s:%s dari IP %s",
+  "httpReqExt%s": ", panjang konten: %s"
 }

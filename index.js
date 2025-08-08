@@ -19,7 +19,7 @@ async function factory (pkgName) {
     constructor () {
       super(pkgName, me.app)
       this.alias = 'w'
-      this.dependencies = ['bajo-logger', 'bajo-extra']
+      this.dependencies = ['bajo-extra']
       this.config = {
         server: {
           host: '127.0.0.1',
@@ -30,6 +30,7 @@ async function factory (pkgName) {
           bodyLimit: 10485760,
           pluginTimeout: 30000
         },
+        deferLog: false,
         prefixVirtual: '~',
         qsKey: {
           bbox: 'bbox',
@@ -104,10 +105,12 @@ async function factory (pkgName) {
     start = async () => {
       const { generateId, runHook } = this.app.bajo
       const cfg = this.getConfig()
-      cfg.factory.loggerInstance = this.app.bajoLogger.instance.child(
-        {},
-        { msgPrefix: '[waibu] ' }
-      )
+      if (this.app.bajoLogger) {
+        cfg.factory.loggerInstance = this.app.bajoLogger.instance.child(
+          {},
+          { msgPrefix: '[waibu] ' }
+        )
+      }
       cfg.factory.genReqId = req => generateId()
       cfg.factory.disableRequestLogging = true
       cfg.factory.querystringParser = str => this.qs.parse(str)
@@ -180,9 +183,10 @@ async function factory (pkgName) {
     }
 
     getIp = (req) => {
+      const { isEmpty } = this.lib._
       let fwd = req.headers['x-forwarded-for'] ?? ''
       if (!Array.isArray(fwd)) fwd = fwd.split(',').map(ip => ip.trim())
-      return fwd[0] ?? req.ip
+      return isEmpty(fwd[0]) ? req.ip : fwd[0]
     }
 
     getOrigin = (req) => {

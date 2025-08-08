@@ -11,5 +11,8 @@
   "rerouted%s%s": "Rerouted %s -> %s",
   "bootSubApp%s": "Boot sub app: %s",
   "routeNotFound%s%s": "Route '%s (%s)' not found",
-  "middlewareDisabled%s": "Middleware '%s' is disabled"
+  "middlewareDisabled%s": "Middleware '%s' is disabled",
+  "httpResp%s%s%s%s%s": "%s %s%s with a %s-status took %sms",
+  "httpReq%s%s%s%s": "%s %s%s from IP %s",
+  "httpReqExt%s": ", content length: %s"
 }
