@@ -16,7 +16,7 @@ const onRequest = {
     const method = plain ? req.method : chalk[c](req.method)
     const url = plain ? (':' + req.url) : chalk.gray(':' + req.url)
     const ip = plain ? this.getIp(req) : chalk.magenta(this.getIp(req))
-    let msg = this.app[ns].print.write('httpReq%s%s%s%s', arrow, method, url, ip)
+    let msg = this.app[ns].print.write('httpReq%s%s%s%s', arrow, method, url.replaceAll('%', '%%'), ip)
     if (req.headers['content-length']) msg += this.app[ns].print.write('httpReqExt%s', req.headers['content-length'])
     if (this.config.deferLog) {
       this.reqLog = this.reqLog ?? {}
