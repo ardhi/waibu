@@ -47,6 +47,7 @@ async function factory (pkgName) {
         },
         paramsCharMap: {},
         logRoutes: true,
+        pageTitleFormat: '%s : %s',
         siteInfo: {
           title: 'My Website',
           orgName: 'My Organization'
@@ -275,6 +276,7 @@ async function factory (pkgName) {
       const { isEmpty, get, trimEnd, trimStart } = this.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, base = 'waibu', params = {}, guessHost } = options
+      if (isEmpty(name)) return name
 
       const plugin = getPlugin(base)
       const cfg = plugin.config ?? {}
