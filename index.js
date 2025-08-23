@@ -15,7 +15,7 @@ import queryString from 'query-string'
 async function factory (pkgName) {
   const me = this
 
-  return class Waibu extends this.lib.BajoPlugin {
+  return class Waibu extends this.lib.Plugin {
     constructor () {
       super(pkgName, me.app)
       this.alias = 'w'
