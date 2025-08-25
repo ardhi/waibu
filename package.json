@@ -4,7 +4,8 @@
   "description": "Web Framework for Bajo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-doc": "jsdoc -c .jsdoc.conf.json",
+    "test": "mocha"
   },
   "type": "module",
   "bajo": {
@@ -47,5 +48,8 @@
     "fastify-no-icon": "^7.0.0",
     "query-string": "^9.1.1",
     "waibu-fastify-static": "^1.1.0"
+  },
+  "devDependencies": {
+    "clean-jsdoc-theme": "^4.3.0"
   }
 }

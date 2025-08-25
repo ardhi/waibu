@@ -1,0 +1,42 @@
+{
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "encoding": "utf8",
+    "recurse": true,
+    "verbose": true,
+    "destination": "./docs",
+    "template": "node_modules/clean-jsdoc-theme",
+    "tutorials": "./tutorial",
+    "readme": "./docs/home.md",
+    "theme_opts": {
+      "default_theme": "light",
+      "display-module-header": true,
+      "title": "Waibu Web Framework",
+      "homepageTitle": "Waibu Web Framework",
+      "menu": [{
+        "title": "Waibu",
+        "link": "https://bajo.app/waibu"
+      }, {
+        "title": "NPM",
+        "link": "https://www.npmjs.com/package/waibu"
+      }, {
+        "title": "Github",
+        "link": "https://github.com/ardhi/waibu"
+      }]
+    }
+  },
+  "source": {
+    "include": ["."],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "exclude": ["node_modules", "docs", "test"]
+  },
+  "markdown": {
+    "hardwrap": false,
+    "idInHeadings": true
+  },
+  "sourceType": "module",
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
