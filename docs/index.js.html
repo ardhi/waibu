@@ -15,27 +15,6 @@ import buildLocals from './lib/build-locals.js'
 import queryString from 'query-string'
 
 /**
- * @typedef THookTypes
- * @type {string[]}
- * @memberof Waibu
- * @property {string} 0 - onRequest
- * @property {string} 1 - onResponse
- * @property {string} 2 - preParsing
- * @property {string} 3 - preValidation
- * @property {string} 4 - preSerialization
- * @property {string} 5 - onSend
- * @property {string} 6 - onTimeout
- * @property {string} 7 - onError
- */
-
-/**
- * @typedef TDependency
- * @type {string[]}
- * @memberof Waibu
- * @property {string} 0=bajo-extra
- */
-
-/**
  * @typedef TEscapeChars
  * @type {Object}
  * @memberof Waibu
@@ -61,31 +40,29 @@ async function factory (pkgName) {
    */
   class Waibu extends this.lib.Plugin {
     /**
-     * @type {THookTypes}
-     * @readonly
+     * @constant {string[]}
+     * @default ['onRequest', 'onResponse', 'preParsing', 'preValidation', 'preHandler', 'preSerialization', 'onSend', 'onTimeout', 'onError']
      * @memberof Waibu
      */
     static hookTypes = ['onRequest', 'onResponse', 'preParsing', 'preValidation', 'preHandler',
       'preSerialization', 'onSend', 'onTimeout', 'onError']
 
     /**
-     * @type {string}
-     * @readonly
+     * @constant {string}
      * @memberof Waibu
      * @default 'w'
      */
     static alias = 'w'
 
     /**
-     * @type {TDependency}
-     * @readonly
+     * @constant {string[]}
+     * @default ['bajo-extra']
      * @memberof Waibu
      */
     static dependencies = ['bajo-extra']
 
     /**
-     * @type {TEscapeChars}
-     * @readonly
+     * @constant {TEscapeChars}
      * @memberof Waibu
      */
     static escapeChars = {
