@@ -32,7 +32,17 @@ async function factory (pkgName) {
   const me = this
 
   /**
-   * Waibu Web Framework plugin for Bajo
+   * Waibu Web Framework plugin for Bajo. This is the main foundation of all web apps attached to
+   * the system through a route prefix. Those web apps are then build as childrens with
+   * its own fastify's context.
+   *
+   * There are currently 3 web apps available:
+   * - {@link https://github.com/ardhi/waibu-static|waibu-static} for static content delivery
+   * - {@link https://github.com/ardhi/waibu-rest-api|waibu-rest-api} for rest api setup
+   * - and {@link https://github.com/ardhi/waibu-mpa|waibu-mpa} for normal multi-page application
+   *
+   * You should write your code as the extension of above web apps. Not to this main app, unless
+   * you want to use write custom web apps with its own context.
    *
    * @class
    */
@@ -325,6 +335,7 @@ async function factory (pkgName) {
     /**
      * Get plugin's prefix by name
      *
+     * @method
      * @param {string} name - Plugin's name
      * @param {string} [webApp=waibuMpa] - Web app to use
      * @returns {string}
@@ -340,7 +351,15 @@ async function factory (pkgName) {
       return trim(prefix, '/')
     }
 
-    getRoutes = (grouped, lite) => {
+    /**
+     * Get all available routes
+     *
+     * @method
+     * @param {boolean} [grouped=false] - Returns as groups of urls and methods
+     * @param {*} [lite=false] - Retuns only urls and methods
+     * @returns {Array}
+     */
+    getRoutes = (grouped = false, lite = false) => {
       const { groupBy, orderBy, mapValues, map, pick } = this.lib._
       const all = this.routes
       let routes
@@ -352,7 +371,16 @@ async function factory (pkgName) {
       return routes
     }
 
-    getUploadedFiles = async (reqId, fileUrl, returnDir) => {
+    /**
+     * Get uploaded files by request ID
+     *
+     * @method
+     * @param {string} reqId - Request ID
+     * @param {boolean} [fileUrl=false] - If ```true```, files returned as file url format (```file:///...```)
+     * @param {*} returnDir - If ```true```, also return its directory
+     * @returns {(Object|Array)} - Returns object if ```returnDir``` is ```true```, array of files otherwise
+     */
+    getUploadedFiles = async (reqId, fileUrl = false, returnDir = false) => {
       const { getPluginDataDir, resolvePath } = this.app.bajo
       const { fastGlob } = this.lib
       const dir = `${getPluginDataDir(this.name)}/upload/${reqId}`
@@ -362,6 +390,13 @@ async function factory (pkgName) {
       return returnDir ? { dir, files } : files
     }
 
+    /**
+     * Is namespace's path contains language detector token?
+     *
+     * @method
+     * @param {string} ns - Plugin name
+     * @returns {boolean}
+     */
     isIntlPath = (ns) => {
       const { get } = this.lib._
       return get(this.app[ns], 'config.intl.detectors', []).includes('path')
@@ -371,6 +406,13 @@ async function factory (pkgName) {
       throw this.error('_notFound', { path: name })
     }
 
+    /**
+     * Parse filter found from Fastify's request based on keys set in config object
+     *
+     * @method
+     * @param {Object} req - Request object
+     * @returns {Object}
+     */
     parseFilter = (req) => {
       const result = {}
       const items = Object.keys(this.config.qsKey)
@@ -380,26 +422,45 @@ async function factory (pkgName) {
       return result
     }
 
-    routeDir = (ns, base) => {
+    /**
+     * Get route directory by plugin's name
+     *
+     * @param {*} ns - Namespace
+     * @param {*} [baseNs] - Base namespace. If not provided, defaults to scope's ns
+     * @returns {string}
+     */
+    routeDir = (ns, baseNs) => {
       const { get } = this.lib._
-      if (!base) base = ns
-      const cfg = this.app[base].config
-      const prefix = get(cfg, 'waibu.prefix', this.app[base].alias)
+      if (!baseNs) baseNs = ns
+      const cfg = this.app[baseNs].config
+      const prefix = get(cfg, 'waibu.prefix', this.app[baseNs].alias)
       const dir = prefix === '' ? '' : `/${prefix}`
-      if (!ns) return dir
       const cfgMpa = get(this, 'app.waibuMpa.config')
       if (ns === this.app.bajo.mainNs && cfgMpa.mountMainAsRoot) return ''
-      if (ns === base) return dir
+      if (ns === baseNs) return dir
       return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
     }
 
-    routePath = (name = '', options = {}) => {
+    /**
+     * Get route path by route's name:
+     * - If it is a ```mailto:``` or ```tel:``` url, it returns as is
+     * - If it is a ns based name, it will be parsed first
+     *
+     * @method
+     * @param {string} name
+     * @param {Object} [options={}] - Options object
+     * @param {string} [options.base=waibu] - Base namespace
+     * @param {boolean} [options.guessHost] - If true, guest host if host is not set
+     * @param {Object} [options.query={}] - Query string's object. If provided, it will be added to returned value
+     * @param {Object} [options.params={}] - Parameter object. If provided, it will be merged to returned value
+     * @returns {string}
+     */
+    routePath = (name, options = {}) => {
       const { getPlugin } = this.app.bajo
       const { defaultsDeep } = this.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.lib._
       const { breakNsPath } = this.app.bajo
-      const { query = {}, base = 'waibu', params = {}, guessHost } = options
-      if (isEmpty(name)) return name
+      const { query = {}, base = this.name, params = {}, guessHost } = options
 
       const plugin = getPlugin(base)
       const cfg = plugin.config ?? {}
@@ -427,6 +488,18 @@ async function factory (pkgName) {
       return url
     }
 
+    /**
+     * Method to send mail through Masohi Messaging System. It is a thin wrapper
+     * for {@link https://github.com/ardhi/masohi-mail|masohi-mail} send method.
+     *
+     * If masohi is not loaded, nothing is delivered.
+     *
+     * @method
+     * @async
+     * @param {(string|Array)} tpl - Mail's template to use. If a string is given, the same template will be used for html & plaintext versions. Otherwise, the first template will be used for html mail, and the second one is for it's plaintext version
+     * @param {Object} [params={}] - {@link https://github.com/ardhi/masohi-mail|masohi-mail}'s params object.
+     * @returns
+     */
     sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, source, options = {} }) => {
       conn = conn ?? 'masohiMail:default'
       if (!this.app.masohi || !this.app.masohiMail) return
@@ -445,6 +518,17 @@ async function factory (pkgName) {
       await this.app.masohi.send({ payload, source: source ?? this.name, conn }) // mail sent through worker
     }
 
+    /**
+     * Recursively unescape block of texts
+     *
+     * @method
+     * @param {string} content - Source content
+     * @param {string} start - Block's start
+     * @param {string} end - Block's end
+     * @param {string} startReplacer - Token to use as block's start replacer
+     * @param {string} endReplacer - Token to use as block's end replacer
+     * @returns {string}
+     */
     unescapeBlock = (content, start, end, startReplacer, endReplacer) => {
       const { extractText } = this.lib.aneka
       const { result } = extractText(content, start, end)
@@ -456,6 +540,13 @@ async function factory (pkgName) {
       return this.unescapeBlock(block, start, end, startReplacer, endReplacer)
     }
 
+    /**
+     * Unescape text using {@link TEscapeChars} rules
+     *
+     * @method
+     * @param {string} text - Text to unescape
+     * @returns {string}
+     */
     unescape = (text) => {
       const { forOwn, invert } = this.lib._
       const mapping = invert(this.escapeChars)
