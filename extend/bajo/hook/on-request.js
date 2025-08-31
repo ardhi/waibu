@@ -4,7 +4,7 @@ const onRequest = {
   level: 5,
   handler: async function onRequest (req, reply) {
     const { importPkg } = this.app.bajo
-    const { get } = this.lib._
+    const { get } = this.app.lib._
     const chalk = await importPkg('bajo:chalk')
     const { plain } = this.app.bajo.config.log
 
@@ -16,8 +16,8 @@ const onRequest = {
     const method = plain ? req.method : chalk[c](req.method)
     const url = plain ? (':' + req.url) : chalk.gray(':' + req.url)
     const ip = plain ? this.getIp(req) : chalk.magenta(this.getIp(req))
-    let msg = this.app[ns].print.write('httpReq%s%s%s%s', arrow, method, url.replaceAll('%', '%%'), ip)
-    if (req.headers['content-length']) msg += this.app[ns].print.write('httpReqExt%s', req.headers['content-length'])
+    let msg = this.app[ns].t('httpReq%s%s%s%s', arrow, method, url.replaceAll('%', '%%'), ip)
+    if (req.headers['content-length']) msg += this.app[ns].t('httpReqExt%s', req.headers['content-length'])
     if (this.config.deferLog) {
       this.reqLog = this.reqLog ?? {}
       this.reqLog[req.id] = msg

@@ -1,5 +1,5 @@
 async function onClose () {
-  this.log.info('serverIs%s', this.print.write('closedL'))
+  this.log.info('serverIs%s', this.t('closedL'))
 }
 
 export default onClose

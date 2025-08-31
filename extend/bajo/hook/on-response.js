@@ -17,7 +17,7 @@ const onResponse = {
   level: 5,
   handler: async function onResponse (req, reply) {
     const { importPkg } = this.app.bajo
-    const { get } = this.lib._
+    const { get } = this.app.lib._
     const { plain } = this.app.bajo.config.log
     const chalk = await importPkg('bajo:chalk')
     let level = 'info'

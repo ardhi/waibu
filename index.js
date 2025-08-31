@@ -46,7 +46,7 @@ async function factory (pkgName) {
    *
    * @class
    */
-  class Waibu extends this.lib.Plugin {
+  class Waibu extends this.app.pluginClass.base {
     /**
      * @constant {string[]}
      * @default ['onRequest', 'onResponse', 'preParsing', 'preValidation', 'preHandler', 'preSerialization', 'onSend', 'onTimeout', 'onError']
@@ -226,8 +226,8 @@ async function factory (pkgName) {
      * @returns {Object} Route object
      */
     findRoute = (name) => {
-      const { outmatch } = this.lib
-      const { find } = this.lib._
+      const { outmatch } = this.app.lib
+      const { find } = this.app.lib._
       const { breakNsPath } = this.app.bajo
       let { ns, subNs = '', path } = breakNsPath(name)
       const params = path.split('|')
@@ -254,7 +254,7 @@ async function factory (pkgName) {
      */
     escape = (text = '') => {
       if (typeof text !== 'string') return text
-      const { forOwn } = this.lib._
+      const { forOwn } = this.app.lib._
       forOwn(this.escapeChars, (v, k) => {
         text = text.replaceAll(k, v)
       })
@@ -296,7 +296,7 @@ async function factory (pkgName) {
      * @returns {string}
      */
     getIp = (req) => {
-      const { isEmpty } = this.lib._
+      const { isEmpty } = this.app.lib._
       let fwd = req.headers['x-forwarded-for'] ?? ''
       if (!Array.isArray(fwd)) fwd = fwd.split(',').map(ip => ip.trim())
       return isEmpty(fwd[0]) ? req.ip : fwd[0]
@@ -310,7 +310,7 @@ async function factory (pkgName) {
      * @returns {string}
      */
     getOrigin = (req) => {
-      const { isEmpty } = this.lib._
+      const { isEmpty } = this.app.lib._
       let host = req.host
       if (isEmpty(host) || host === ':authority') host = `${this.config.server.host}:${this.config.server.port}`
       return `${req.protocol}://${host}`
@@ -324,7 +324,7 @@ async function factory (pkgName) {
      * @returns {Object}
      */
     getPluginByPrefix = (prefix) => {
-      const { get, find } = this.lib._
+      const { get, find } = this.app.lib._
       const item = find(this.app.waibu.routes, r => {
         return get(r, 'config.prefix') === prefix
       })
@@ -341,7 +341,7 @@ async function factory (pkgName) {
      * @returns {string}
      */
     getPluginPrefix = (name, webApp = 'waibuMpa') => {
-      const { get, trim } = this.lib._
+      const { get, trim } = this.app.lib._
       let prefix = get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias)
       if (name === 'main') {
         const cfg = this.app[webApp].config
@@ -360,7 +360,7 @@ async function factory (pkgName) {
      * @returns {Array}
      */
     getRoutes = (grouped = false, lite = false) => {
-      const { groupBy, orderBy, mapValues, map, pick } = this.lib._
+      const { groupBy, orderBy, mapValues, map, pick } = this.app.lib._
       const all = this.routes
       let routes
       if (grouped) {
@@ -382,7 +382,7 @@ async function factory (pkgName) {
      */
     getUploadedFiles = async (reqId, fileUrl = false, returnDir = false) => {
       const { getPluginDataDir, resolvePath } = this.app.bajo
-      const { fastGlob } = this.lib
+      const { fastGlob } = this.app.lib
       const dir = `${getPluginDataDir(this.name)}/upload/${reqId}`
       const result = await fastGlob(`${dir}/*`)
       if (!fileUrl) return returnDir ? { dir, files: result } : result
@@ -398,7 +398,7 @@ async function factory (pkgName) {
      * @returns {boolean}
      */
     isIntlPath = (ns) => {
-      const { get } = this.lib._
+      const { get } = this.app.lib._
       return get(this.app[ns], 'config.intl.detectors', []).includes('path')
     }
 
@@ -430,13 +430,13 @@ async function factory (pkgName) {
      * @returns {string}
      */
     routeDir = (ns, baseNs) => {
-      const { get } = this.lib._
+      const { get } = this.app.lib._
       if (!baseNs) baseNs = ns
       const cfg = this.app[baseNs].config
       const prefix = get(cfg, 'waibu.prefix', this.app[baseNs].alias)
       const dir = prefix === '' ? '' : `/${prefix}`
       const cfgMpa = get(this, 'app.waibuMpa.config')
-      if (ns === this.app.bajo.mainNs && cfgMpa.mountMainAsRoot) return ''
+      if (ns === this.app.mainNs && cfgMpa.mountMainAsRoot) return ''
       if (ns === baseNs) return dir
       return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
     }
@@ -457,8 +457,8 @@ async function factory (pkgName) {
      */
     routePath = (name, options = {}) => {
       const { getPlugin } = this.app.bajo
-      const { defaultsDeep } = this.lib.aneka
-      const { isEmpty, get, trimEnd, trimStart } = this.lib._
+      const { defaultsDeep } = this.app.lib.aneka
+      const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, base = this.name, params = {}, guessHost } = options
 
@@ -503,7 +503,7 @@ async function factory (pkgName) {
     sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, source, options = {} }) => {
       conn = conn ?? 'masohiMail:default'
       if (!this.app.masohi || !this.app.masohiMail) return
-      const { get, isString } = this.lib._
+      const { get, isString } = this.app.lib._
       const { generateId } = this.app.bajo
       const { render } = this.app.bajoTemplate
       if (isString(tpl)) tpl = [tpl]
@@ -530,7 +530,7 @@ async function factory (pkgName) {
      * @returns {string}
      */
     unescapeBlock = (content, start, end, startReplacer, endReplacer) => {
-      const { extractText } = this.lib.aneka
+      const { extractText } = this.app.lib.aneka
       const { result } = extractText(content, start, end)
       if (result.length === 0) return content
       const unescaped = this.unescape(result)
@@ -548,7 +548,7 @@ async function factory (pkgName) {
      * @returns {string}
      */
     unescape = (text) => {
-      const { forOwn, invert } = this.lib._
+      const { forOwn, invert } = this.app.lib._
       const mapping = invert(this.escapeChars)
       forOwn(mapping, (v, k) => {
         text = text.replaceAll(k, v)
