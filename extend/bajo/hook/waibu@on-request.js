@@ -1,4 +1,4 @@
-import { methodColor } from './on-response.js'
+import { methodColor } from './waibu@on-response.js'
 
 const onRequest = {
   level: 5,
@@ -9,8 +9,8 @@ const onRequest = {
     const { plain } = this.app.bajo.config.log
 
     req.site = this.config.siteInfo
-    req.ns = get(reply.request, 'routeOptions.config.ns') ?? this.name
-    const ns = get(reply.request, 'routeOptions.config.webApp') ?? this.name
+    req.ns = get(reply.request, 'routeOptions.config.ns') ?? this.ns
+    const ns = get(reply.request, 'routeOptions.config.webApp') ?? this.ns
     const arrow = plain ? '<' : chalk.bold('🡨')
     const c = methodColor[req.method] ?? 'gray'
     const method = plain ? req.method : chalk[c](req.method)

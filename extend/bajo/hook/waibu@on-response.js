@@ -23,7 +23,7 @@ const onResponse = {
     let level = 'info'
     if (reply.statusCode >= 300 && reply.statusCode < 400) level = 'warn'
     else if (reply.statusCode >= 400) level = 'error'
-    const ns = get(reply.request, 'routeOptions.config.webApp') ?? this.name
+    const ns = get(reply.request, 'routeOptions.config.webApp') ?? this.ns
     const arrow = plain ? '>' : chalk.bold('🡪')
     const mc = methodColor[req.method] ?? 'gray'
     const method = plain ? req.method : chalk[mc](req.method)

@@ -88,6 +88,7 @@ async function factory (pkgName) {
        * @type {Object}
        */
       this.config = {
+        home: undefined,
         server: {
           host: '127.0.0.1',
           port: 7771
@@ -203,7 +204,7 @@ async function factory (pkgName) {
       await handleRedirect.call(this, instance)
       await handleForward.call(this, instance)
       await appHook.call(this)
-      await routeHook.call(this, this.name)
+      await routeHook.call(this, this.ns)
       await boot.call(this)
       await instance.listen(cfg.server)
       if (cfg.printRoutes) printRoutes.call(this)
@@ -383,7 +384,7 @@ async function factory (pkgName) {
     getUploadedFiles = async (reqId, fileUrl = false, returnDir = false) => {
       const { getPluginDataDir, resolvePath } = this.app.bajo
       const { fastGlob } = this.app.lib
-      const dir = `${getPluginDataDir(this.name)}/upload/${reqId}`
+      const dir = `${getPluginDataDir(this.ns)}/upload/${reqId}`
       const result = await fastGlob(`${dir}/*`)
       if (!fileUrl) return returnDir ? { dir, files: result } : result
       const files = result.map(f => resolvePath(f, true))
@@ -460,7 +461,7 @@ async function factory (pkgName) {
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
-      const { query = {}, base = this.name, params = {}, guessHost } = options
+      const { query = {}, base = this.ns, params = {}, guessHost } = options
 
       const plugin = getPlugin(base)
       const cfg = plugin.config ?? {}
@@ -515,7 +516,7 @@ async function factory (pkgName) {
       const message = await render(tpl[0], locals, opts)
       if (tpl[1]) opts.messageText = await render(tpl[1], locals, opts)
       const payload = { type: 'object', data: { to, cc, bcc, from, subject, message, options: opts } }
-      await this.app.masohi.send({ payload, source: source ?? this.name, conn }) // mail sent through worker
+      await this.app.masohi.send({ payload, source: source ?? this.ns, conn }) // mail sent through worker
     }
 
     /**
