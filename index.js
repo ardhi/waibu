@@ -343,12 +343,11 @@ async function factory (pkgName) {
      */
     getPluginPrefix = (name, webApp = 'waibuMpa') => {
       const { get, trim } = this.app.lib._
-      let prefix = get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias)
+      let prefix = get(this, `app.${name}.config.${webApp}.prefix`, get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias))
       if (name === 'main') {
         const cfg = this.app[webApp].config
         if (cfg.mountMainAsRoot) prefix = ''
       }
-
       return trim(prefix, '/')
     }
 
