@@ -8,7 +8,7 @@
 
 ## Installation
 
-Goto your ```{project-dir}``` and type:
+Goto your ```{app-dir}``` and type:
 
 ```bash
 $ npm install waibu bajo-extra
