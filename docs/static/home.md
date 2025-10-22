@@ -1,5 +1,12 @@
-<p><img alt="Waibu Web Framework" src="static/logo-ecosystem.png" width="200" /></p>
-- [Contributing](CONTRIBUTING.md)
+![Waibu Web Framework](static/logo.png)
+
+### Waibu Web Framework for [Bajo](https://github.com/ardhi/bajo)
+
+## Applications
+
+- [Multi Page Application](https://ardhi.github.io/waibu-mpa)
+- [REST Api Framework](https://ardhi.github.io/waibu-rest-api)
+- [Static Resource](https://ardhi.github.io/waibu-static)
 
 ## Hire Me
 

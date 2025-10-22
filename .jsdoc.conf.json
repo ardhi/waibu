@@ -6,17 +6,16 @@
     "verbose": true,
     "destination": "./docs",
     "template": "node_modules/clean-jsdoc-theme",
-    "tutorials": "./tutorial",
-    "readme": "../shared/static/home-main.md",
+    "readme": "./docs/static/home.md",
     "theme_opts": {
-      "sections": ["Tutorials", "Classes", "Events", "Modules", "Global"],
+      "sections": ["Classes", "Events", "Modules", "Global"],
       "default_theme": "light",
       "display-module-header": true,
-      "title": "Waibu Web Framework",
-      "homepageTitle": "Waibu Web Framework",
+      "title": "Waibu API",
+      "homepageTitle": "Waibu API",
       "menu": [{
-        "title": "Waibu",
-        "link": "https://bajo.app/waibu"
+        "title": "Homepage",
+        "link": "https://waibu.bajo.app/"
       }, {
         "title": "NPM",
         "link": "https://www.npmjs.com/package/waibu"
@@ -25,7 +24,7 @@
         "link": "https://github.com/ardhi/waibu"
       }, {
         "title": "Bajo",
-        "link": "https://bajo.app"
+        "link": "https://bajo.app/"
       }]
     }
   },
@@ -41,13 +40,6 @@
   "sourceType": "module",
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false,
-    "default": {
-      "staticFiles": {
-        "include": [
-          "../shared"
-        ]
-      }
-    }
+    "monospaceLinks": false
   }
 }
