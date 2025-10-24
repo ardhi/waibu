@@ -14,14 +14,14 @@
       "title": "Waibu API",
       "homepageTitle": "Waibu API",
       "menu": [{
-        "title": "Homepage",
-        "link": "https://waibu.bajo.app/"
-      }, {
         "title": "NPM",
         "link": "https://www.npmjs.com/package/waibu"
       }, {
         "title": "Github",
         "link": "https://github.com/ardhi/waibu"
+      }, {
+        "title": "Waibu",
+        "link": "https://waibu.bajo.app/"
       }, {
         "title": "Bajo",
         "link": "https://bajo.app/"
