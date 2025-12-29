@@ -46,7 +46,7 @@ async function factory (pkgName) {
    *
    * @class
    */
-  class Waibu extends this.app.pluginClass.base {
+  class Waibu extends this.app.baseClass.Base {
     /**
      * @constant {string[]}
      * @default ['onRequest', 'onResponse', 'preParsing', 'preValidation', 'preHandler', 'preSerialization', 'onSend', 'onTimeout', 'onError']
@@ -91,7 +91,7 @@ async function factory (pkgName) {
         home: undefined,
         server: {
           host: '127.0.0.1',
-          port: 7771
+          port: 17845
         },
         factory: {
           trustProxy: true,
@@ -176,7 +176,8 @@ async function factory (pkgName) {
      * @async
      */
     start = async () => {
-      const { generateId, runHook } = this.app.bajo
+      const { runHook } = this.app.bajo
+      const { generateId } = this.app.lib.aneka
       const cfg = this.getConfig()
       if (this.app.bajoLogger) {
         cfg.factory.loggerInstance = this.app.bajoLogger.instance.child(
@@ -381,7 +382,8 @@ async function factory (pkgName) {
      * @returns {(Object|Array)} - Returns object if ```returnDir``` is ```true```, array of files otherwise
      */
     getUploadedFiles = async (reqId, fileUrl = false, returnDir = false) => {
-      const { getPluginDataDir, resolvePath } = this.app.bajo
+      const { getPluginDataDir } = this.app.bajo
+      const { resolvePath } = this.app.lib.aneka
       const { fastGlob } = this.app.lib
       const dir = `${getPluginDataDir(this.ns)}/upload/${reqId}`
       const result = await fastGlob(`${dir}/*`)
@@ -504,7 +506,7 @@ async function factory (pkgName) {
       conn = conn ?? 'masohiMail:default'
       if (!this.app.masohi || !this.app.masohiMail) return
       const { get, isString } = this.app.lib._
-      const { generateId } = this.app.bajo
+      const { generateId } = this.app.lib.aneka
       const { render } = this.app.bajoTemplate
       if (isString(tpl)) tpl = [tpl]
       const locals = await buildLocals.call(this, { tpl, params: data, opts: options })
