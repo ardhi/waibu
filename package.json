@@ -47,7 +47,7 @@
     "fastify": "^5.6.2",
     "fastify-no-icon": "^7.0.0",
     "query-string": "^9.3.1",
-    "waibu-fastify-static": "^1.1.0"
+    "waibu-fastify-static": "^2.0.0"
   },
   "devDependencies": {
     "clean-jsdoc-theme": "^4.3.0",
