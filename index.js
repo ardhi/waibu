@@ -56,20 +56,6 @@ async function factory (pkgName) {
       'preSerialization', 'onSend', 'onTimeout', 'onError']
 
     /**
-     * @constant {string}
-     * @memberof Waibu
-     * @default 'w'
-     */
-    static alias = 'w'
-
-    /**
-     * @constant {string[]}
-     * @default ['bajo-extra']
-     * @memberof Waibu
-     */
-    static dependencies = ['bajo-extra']
-
-    /**
      * @constant {TEscapeChars}
      * @memberof Waibu
      */
