@@ -1,4 +1,5 @@
 {
+  "waibu": "Waibu",
   "pluginPrefixConflic%s%s%s": "Plugin prefix '%s' conflict between '%s' and '%s'",
   "serverIs%s": "Server is %s",
   "closedL": "closed",

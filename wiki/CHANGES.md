@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-01-19
+
+- [2.1.2] Bug fix on ```getAppTitle()```
+- [2.1.2] Add missing some translation
+
 ## 2025-12-28
 
 - [2.1.0] Ported to ```bajo@2.2.x``` specs

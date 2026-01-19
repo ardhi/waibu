@@ -1,4 +1,5 @@
 {
+  "waibu": "Waibu",
   "pluginPrefixConflic%s%s%s": "Ada konflik di prefiks '%s' antara '%s' dan '%s'",
   "serverIs%s": "Server %s",
   "closedL": "tertutup",
