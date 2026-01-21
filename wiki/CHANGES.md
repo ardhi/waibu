@@ -2,8 +2,6 @@
 
 ## 2026-01-21
 
-- [2.1.3] Add ```getPluginTitle()```
-- [2.1.3] Bug fix on ```getAppTitle()```
 - [2.1.3] Rework on all title handlers
 
 ## 2026-01-19
