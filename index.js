@@ -5,10 +5,10 @@ import routeHook from './lib/webapp-scope/route-hook.js'
 import printRoutes from './lib/print-routes.js'
 import { boot } from './lib/app.js'
 import sensible from '@fastify/sensible'
-import noIcon from 'fastify-no-icon'
 import underPressure from '@fastify/under-pressure'
 import handleForward from './lib/handle-forward.js'
 import handleRedirect from './lib/handle-redirect.js'
+import handleFavicon from './lib/handle-favicon.js'
 import buildLocals from './lib/build-locals.js'
 import queryString from 'query-string'
 
@@ -117,7 +117,7 @@ async function factory (pkgName) {
             fileSize: 10485760
           }
         },
-        noIcon: true,
+        favicon: false,
         underPressure: false,
         forwardOpts: {
           disableRequestLogging: true,
@@ -187,7 +187,7 @@ async function factory (pkgName) {
       await runHook('waibu:afterCreateContext', instance)
       await instance.register(sensible)
       if (cfg.underPressure) await instance.register(underPressure)
-      if (cfg.noIcon) await instance.register(noIcon)
+      await handleFavicon.call(this, instance)
       await handleRedirect.call(this, instance)
       await handleForward.call(this, instance)
       await appHook.call(this)
@@ -443,7 +443,7 @@ async function factory (pkgName) {
      * @param {Object} [options.params={}] - Parameter object. If provided, it will be merged to returned value
      * @returns {string}
      */
-    routePath = (name, options = {}) => {
+    routePath = (name = '', options = {}) => {
       const { getPlugin } = this.app.bajo
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._

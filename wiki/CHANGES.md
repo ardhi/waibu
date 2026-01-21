@@ -3,6 +3,7 @@
 ## 2026-01-21
 
 - [2.1.3] Rework on all title handlers
+- [2.1.4] Faviocn handling
 
 ## 2026-01-19
 
