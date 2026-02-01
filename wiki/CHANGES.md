@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-01
+
+- [2.2.0] Change query string token ```match``` to ```search``` for fulltext search
+
 ## 2026-01-21
 
 - [2.1.3] Rework on all title handlers

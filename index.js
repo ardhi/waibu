@@ -91,7 +91,7 @@ async function factory (pkgName) {
           bboxLatField: 'bboxLatField',
           bboxLngField: 'bboxLngField',
           query: 'query',
-          match: 'match',
+          search: 'search',
           skip: 'skip',
           page: 'page',
           limit: 'limit',
