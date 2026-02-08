@@ -1,5 +1,12 @@
 # Changes
 
+## 2026-02-08
+
+- [2.3.0] Simplify all common handler calls
+- [2.3.0] All ```webApp``` now have it's assigned fastify context ```plugin.webAppCtx```
+- [2.3.0] Simplify & unite error handler & not found handler
+- [2.3.0] Add ```options.timeZone``` in ```req.format()```
+
 ## 2026-02-01
 
 - [2.2.0] Change query string token ```match``` to ```search``` for fulltext search

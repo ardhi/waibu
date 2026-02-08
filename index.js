@@ -1,14 +1,17 @@
 import collectRoutePathHandlers from './lib/collect-route-path-handlers.js'
 import fastify from 'fastify'
-import appHook from './lib/app-hook.js'
+import handleAppHook from './lib/handle-app-hook.js'
 import routeHook from './lib/webapp-scope/route-hook.js'
 import printRoutes from './lib/print-routes.js'
-import { boot } from './lib/app.js'
+import webApp from './lib/web-app.js'
 import sensible from '@fastify/sensible'
 import underPressure from '@fastify/under-pressure'
 import handleForward from './lib/handle-forward.js'
 import handleRedirect from './lib/handle-redirect.js'
 import handleFavicon from './lib/handle-favicon.js'
+import handleError from './lib/handle-error.js'
+import handleNotFound from './lib/handle-not-found.js'
+import handleHome from './lib/handle-home.js'
 import buildLocals from './lib/build-locals.js'
 import queryString from 'query-string'
 
@@ -82,7 +85,12 @@ async function factory (pkgName) {
         factory: {
           trustProxy: true,
           bodyLimit: 10485760,
-          pluginTimeout: 30000
+          pluginTimeout: 30000,
+          routerOptions: {
+          }
+        },
+        intl: {
+          detectors: ['qs']
         },
         deferLog: false,
         prefixVirtual: '~',
@@ -175,25 +183,27 @@ async function factory (pkgName) {
       cfg.factory.disableRequestLogging = true
       cfg.factory.querystringParser = str => this.qs.parse(str)
 
-      const instance = fastify(cfg.factory)
-      instance.decorateRequest('lang', null)
-      instance.decorateRequest('t', () => {})
-      instance.decorateRequest('format', () => {})
-      instance.decorateRequest('langDetector', null)
-      instance.decorateRequest('site', null)
-      instance.decorateRequest('ns', null)
-      this.instance = instance
+      this.instance = fastify(cfg.factory)
+      this.instance.decorateRequest('lang', null)
+      this.instance.decorateRequest('t', () => {})
+      this.instance.decorateRequest('format', () => {})
+      this.instance.decorateRequest('langDetector', null)
+      this.instance.decorateRequest('site', null)
+      this.instance.decorateRequest('ns', null)
       this.routes = this.routes || []
-      await runHook('waibu:afterCreateContext', instance)
-      await instance.register(sensible)
-      if (cfg.underPressure) await instance.register(underPressure)
-      await handleFavicon.call(this, instance)
-      await handleRedirect.call(this, instance)
-      await handleForward.call(this, instance)
-      await appHook.call(this)
+      await runHook('waibu:afterCreateContext', this.instance)
+      await this.instance.register(sensible)
+      if (cfg.underPressure) await this.instance.register(underPressure)
+      await handleFavicon.call(this)
+      await handleRedirect.call(this)
+      await handleForward.call(this)
+      await handleAppHook.call(this)
+      await handleError.call(this)
       await routeHook.call(this, this.ns)
-      await boot.call(this)
-      await instance.listen(cfg.server)
+      await webApp.call(this)
+      await handleHome.call(this)
+      await handleNotFound.call(this)
+      await this.instance.listen(cfg.server)
       if (cfg.printRoutes) printRoutes.call(this)
     }
 
