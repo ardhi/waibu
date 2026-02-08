@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-02-09
+
+- [2.3.4] Bug fix on error handling
+- [2.3.4] Bug fix on not found handling
+- [2.3.4] Bug fix on redirection handling
+
 ## 2026-02-08
 
 - [2.3.0] Simplify all common handler calls
