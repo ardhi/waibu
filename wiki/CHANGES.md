@@ -5,6 +5,7 @@
 - [2.3.4] Bug fix on error handling
 - [2.3.4] Bug fix on not found handling
 - [2.3.4] Bug fix on redirection handling
+- [2.4.0] Accept path parameter as in ```{param}``` to complement ```:param``` in ```routePath()```
 
 ## 2026-02-08
 

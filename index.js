@@ -458,7 +458,7 @@ async function factory (pkgName) {
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
-      const { query = {}, base = this.ns, params = {}, guessHost } = options
+      const { query = {}, base = this.ns, params = {}, guessHost, defaults = {} } = options
 
       const plugin = getPlugin(base)
       const cfg = plugin.config ?? {}
@@ -474,7 +474,12 @@ async function factory (pkgName) {
       if (info.path.includes('//')) return info.path
 
       info.path = info.path.split('/').map(p => {
-        return p[0] === ':' && params[p.slice(1)] ? params[p.slice(1)] : p
+        if (!(p[0] === ':' || (p[0] === '{' && p[p.length - 1] === '}'))) return p
+        const _p = p
+        p = p.replace(':', '').replace('{', '').replace('}', '')
+        if (params[p]) return params[p]
+        if (defaults[p]) return defaults[p]
+        return _p
       }).join('/')
       let url = info.path
       const langDetector = get(cfg, 'intl.detectors', [])
