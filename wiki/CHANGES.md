@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-17
+
+- [2.5.0] Add ```getHostname()```
+
 ## 2026-02-16
 
 - [2.4.1] Bug fix on page with features

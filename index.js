@@ -301,7 +301,7 @@ async function factory (pkgName) {
     }
 
     /**
-     * Get origin of fastify's request object
+     * Get origin from fastify's request object
      *
      * @method
      * @param {Object} req
@@ -312,6 +312,16 @@ async function factory (pkgName) {
       let host = req.host
       if (isEmpty(host) || host === ':authority') host = `${this.config.server.host}:${this.config.server.port}`
       return `${req.protocol}://${host}`
+    }
+
+    /**
+     * Get hostname from fastify's request object
+     *
+     * @param {Object} req
+     * @returns {string}
+     */
+    getHostname = (req) => {
+      return req.hostname.split(':')[0]
     }
 
     /**
