@@ -568,6 +568,54 @@ async function factory (pkgName) {
       })
       return text
     }
+
+    arrayToAttr = (array = [], delimiter = ' ') => {
+      const { isPlainObject } = this.app.lib._
+      return array.map(item => {
+        if (isPlainObject(item)) return this.objectToAttr(item)
+        return item
+      }).join(delimiter)
+    }
+
+    attrToArray = (text = '', delimiter = ' ') => {
+      const { map, trim, without, isArray } = this.app.lib._
+      if (text === true) text = ''
+      if (isArray(text)) text = text.join(delimiter)
+      return without(map(text.split(delimiter), i => trim(i)), '', undefined, null).map(item => {
+        return item
+      })
+    }
+
+    attrToObject = (text = '', delimiter = ';', kvDelimiter = ':') => {
+      const { camelCase, isPlainObject } = this.app.lib._
+      const result = {}
+      if (isPlainObject(text)) text = this.objectToAttr(text)
+      if (typeof text !== 'string') return text
+      if (text.slice(1, 3) === '%=') return text
+      const array = this.attrToArray(text, delimiter)
+      array.forEach(item => {
+        const [key, val] = this.attrToArray(item, kvDelimiter)
+        result[camelCase(key)] = val
+      })
+      return result
+    }
+
+    base64JsonDecode = (data = 'e30=') => {
+      return JSON.parse(Buffer.from(data, 'base64'))
+    }
+
+    base64JsonEncode = (data) => {
+      return Buffer.from(JSON.stringify(data)).toString('base64')
+    }
+
+    objectToAttr = (obj = {}, delimiter = ';', kvDelimiter = ':') => {
+      const { forOwn, kebabCase } = this.app.lib._
+      const result = []
+      forOwn(obj, (v, k) => {
+        result.push(`${kebabCase(k)}${kvDelimiter}${v ?? ''}`)
+      })
+      return result.join(delimiter)
+    }
   }
 
   return Waibu

@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-18
+
+- [2.6.0] Move attribute functions from ```waibu-mpa```
+
 ## 2026-02-17
 
 - [2.5.0] Add ```getHostname()```
