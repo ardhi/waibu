@@ -329,15 +329,16 @@ async function factory (pkgName) {
      *
      * @method
      * @param {string} prefix
+     * @param {boolean} nsOnly - Set ```true``` to return plugin's namespace only
      * @returns {Object}
      */
-    getPluginByPrefix = (prefix) => {
+    getPluginByPrefix = (prefix, nsOnly) => {
       const { get, find } = this.app.lib._
-      const item = find(this.app.waibu.routes, r => {
-        return get(r, 'config.prefix') === prefix
+      const ns = find(this.app.getAllNs(), p => {
+        return get(this, `app.${p}.config.waibu.prefix`) === prefix
       })
-      const ns = get(item, 'config.ns')
-      if (ns) return this.app[ns]
+      if (!ns) return
+      return nsOnly ? ns : this.app[ns]
     }
 
     /**

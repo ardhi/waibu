@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-02-20
+
+- [2.7.0] Add ```req.te()``` decorator
+- [2.7.0] Bug fix on ```getPluginByPrefix()```
+- [2.7.0] Bug fix on ```notFoundHandler.interceptor()```
+
 ## 2026-02-18
 
 - [2.6.0] Move attribute functions from ```waibu-mpa```
