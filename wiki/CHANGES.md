@@ -1,5 +1,12 @@
 # Changes
 
+## 2026-02-21
+
+- [2.7.1] Bug fix on ```errorHandler```
+- [2.7.1] Bug fix on ```notFoundHandler```
+- [2.7.1] Add fallback template for both handlers above
+
+
 ## 2026-02-20
 
 - [2.7.0] Add ```req.te()``` decorator

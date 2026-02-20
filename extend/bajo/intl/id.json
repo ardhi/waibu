@@ -15,5 +15,7 @@
   "middlewareDisabled%s": "Middleware '%s' dimatikan",
   "httpResp%s%s%s%s%s": "%s %s:%s dengan status %s selama %sms",
   "httpReq%s%s%s%s": "%s %s:%s dari IP %s",
-  "httpReqExt%s": ", panjang konten: %s"
+  "httpReqExt%s": ", panjang konten: %s",
+  "internalServerError": "Kesalahan Internal Server",
+  "pageNotFound": "Halaman Tidak Ditemukan"
 }

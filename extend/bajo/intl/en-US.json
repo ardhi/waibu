@@ -15,5 +15,7 @@
   "middlewareDisabled%s": "Middleware '%s' is disabled",
   "httpResp%s%s%s%s%s": "%s %s%s with a %s-status took %sms",
   "httpReq%s%s%s%s": "%s %s%s from IP %s",
-  "httpReqExt%s": ", content length: %s"
+  "httpReqExt%s": ", content length: %s",
+  "internalServerError": "Internal Server Error",
+  "pageNotFound": "Page Not Found"
 }
