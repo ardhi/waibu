@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-03-02
+
+- [2.8.0] Remove ```sendMail()``` as from now on it will be using sumba's ```sendMail()```
+- [2.8.0] Remove mail templates
+
 ## 2026-02-21
 
 - [2.7.1] Bug fix on ```errorHandler```

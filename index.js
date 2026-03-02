@@ -12,7 +12,6 @@ import handleFavicon from './lib/handle-favicon.js'
 import handleError from './lib/handle-error.js'
 import handleNotFound from './lib/handle-not-found.js'
 import handleHome from './lib/handle-home.js'
-import buildLocals from './lib/build-locals.js'
 import queryString from 'query-string'
 
 /**
@@ -500,36 +499,6 @@ async function factory (pkgName) {
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
       if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
       return url
-    }
-
-    /**
-     * Method to send mail through Masohi Messaging System. It is a thin wrapper
-     * for {@link https://github.com/ardhi/masohi-mail|masohi-mail} send method.
-     *
-     * If masohi is not loaded, nothing is delivered.
-     *
-     * @method
-     * @async
-     * @param {(string|Array)} tpl - Mail's template to use. If a string is given, the same template will be used for html & plaintext versions. Otherwise, the first template will be used for html mail, and the second one is for it's plaintext version
-     * @param {Object} [params={}] - {@link https://github.com/ardhi/masohi-mail|masohi-mail}'s params object.
-     * @returns
-     */
-    sendMail = async (tpl, { to, cc, bcc, from, subject, data = {}, conn, source, options = {} }) => {
-      conn = conn ?? 'masohiMail:default'
-      if (!this.app.masohi || !this.app.masohiMail) return
-      const { get, isString } = this.app.lib._
-      const { generateId } = this.app.lib.aneka
-      const { render } = this.app.bajoTemplate
-      if (isString(tpl)) tpl = [tpl]
-      const locals = await buildLocals.call(this, { tpl, params: data, opts: options })
-      const opts = {
-        lang: get(options, 'req.lang'),
-        groupId: get(options, 'req.id', generateId())
-      }
-      const message = await render(tpl[0], locals, opts)
-      if (tpl[1]) opts.messageText = await render(tpl[1], locals, opts)
-      const payload = { type: 'object', data: { to, cc, bcc, from, subject, message, options: opts } }
-      await this.app.masohi.send({ payload, source: source ?? this.ns, conn }) // mail sent through worker
     }
 
     /**
