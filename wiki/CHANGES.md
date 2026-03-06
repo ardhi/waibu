@@ -3,6 +3,7 @@
 ## 2026-03-06
 
 - [2.8.1] Bug fix on ```req.body``` parsing
+- [2.8.2] Bug fix on ```preValidation```
 
 ## 2026-03-02
 
