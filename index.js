@@ -13,6 +13,7 @@ import handleError from './lib/handle-error.js'
 import handleNotFound from './lib/handle-not-found.js'
 import handleHome from './lib/handle-home.js'
 import queryString from 'query-string'
+import handleBody from './lib/handle-body.js'
 
 /**
  * @typedef TEscapeChars
@@ -199,6 +200,7 @@ async function factory (pkgName) {
       await handleAppHook.call(this)
       await handleError.call(this)
       await routeHook.call(this, this.ns)
+      await handleBody.call(this)
       await webApp.call(this)
       await handleHome.call(this)
       await handleNotFound.call(this)

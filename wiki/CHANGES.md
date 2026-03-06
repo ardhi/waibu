@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-06
+
+- [2.8.1] Bug fix on ```req.body``` parsing
+
 ## 2026-03-02
 
 - [2.8.0] Remove ```sendMail()``` as from now on it will be using sumba's ```sendMail()```
