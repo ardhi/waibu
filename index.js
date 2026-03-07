@@ -8,7 +8,6 @@ import sensible from '@fastify/sensible'
 import underPressure from '@fastify/under-pressure'
 import handleForward from './lib/handle-forward.js'
 import handleRedirect from './lib/handle-redirect.js'
-import handleFavicon from './lib/handle-favicon.js'
 import handleError from './lib/handle-error.js'
 import handleNotFound from './lib/handle-not-found.js'
 import handleHome from './lib/handle-home.js'
@@ -125,7 +124,6 @@ async function factory (pkgName) {
             fileSize: 10485760
           }
         },
-        favicon: false,
         underPressure: false,
         forwardOpts: {
           disableRequestLogging: true,
@@ -194,7 +192,6 @@ async function factory (pkgName) {
       await runHook('waibu:afterCreateContext', this.instance)
       await this.instance.register(sensible)
       if (cfg.underPressure) await this.instance.register(underPressure)
-      await handleFavicon.call(this)
       await handleRedirect.call(this)
       await handleForward.call(this)
       await handleAppHook.call(this)

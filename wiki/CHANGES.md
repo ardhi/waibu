@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-03-07
+
+- [2.9.0] Change logo
+- [2.9.0] Remove favicon handler
+
 ## 2026-03-06
 
 - [2.8.1] Bug fix on ```req.body``` parsing
