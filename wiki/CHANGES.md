@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-12
+
+- [2.9.1] Bug fix on ```req.body``` parsing with multipart body parser
+
 ## 2026-03-07
 
 - [2.9.0] Change logo
