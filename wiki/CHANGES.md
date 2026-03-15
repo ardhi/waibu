@@ -1,8 +1,12 @@
 # Changes
 
+## 2026-03-15
+
+- [2.9.2] Bug fix missing default ```favicon.png```
+
 ## 2026-03-12
 
-- [2.9.1] Bug fix on ```req.body``` parsing with multipart body parser
+- [2.9.1] Bug fix in ```req.body``` parsing with multipart body parser
 
 ## 2026-03-07
 
@@ -11,8 +15,8 @@
 
 ## 2026-03-06
 
-- [2.8.1] Bug fix on ```req.body``` parsing
-- [2.8.2] Bug fix on ```preValidation```
+- [2.8.1] Bug fix in ```req.body``` parsing
+- [2.8.2] Bug fix in ```preValidation```
 
 ## 2026-03-02
 
@@ -21,16 +25,16 @@
 
 ## 2026-02-21
 
-- [2.7.1] Bug fix on ```errorHandler```
-- [2.7.1] Bug fix on ```notFoundHandler```
+- [2.7.1] Bug fix in ```errorHandler```
+- [2.7.1] Bug fix in ```notFoundHandler```
 - [2.7.1] Add fallback template for both handlers above
 
 
 ## 2026-02-20
 
 - [2.7.0] Add ```req.te()``` decorator
-- [2.7.0] Bug fix on ```getPluginByPrefix()```
-- [2.7.0] Bug fix on ```notFoundHandler.interceptor()```
+- [2.7.0] Bug fix in ```getPluginByPrefix()```
+- [2.7.0] Bug fix in ```notFoundHandler.interceptor()```
 
 ## 2026-02-18
 
@@ -42,13 +46,13 @@
 
 ## 2026-02-16
 
-- [2.4.1] Bug fix on page with features
+- [2.4.1] Bug fix in page with features
 
 ## 2026-02-09
 
-- [2.3.4] Bug fix on error handling
-- [2.3.4] Bug fix on not found handling
-- [2.3.4] Bug fix on redirection handling
+- [2.3.4] Bug fix in error handling
+- [2.3.4] Bug fix in not found handling
+- [2.3.4] Bug fix in redirection handling
 - [2.4.0] Accept path parameter as in ```{param}``` to complement ```:param``` in ```routePath()```
 
 ## 2026-02-08
@@ -69,7 +73,7 @@
 
 ## 2026-01-19
 
-- [2.1.2] Bug fix on ```getAppTitle()```
+- [2.1.2] Bug fix in ```getAppTitle()```
 - [2.1.2] Add missing some translation
 
 ## 2025-12-28
