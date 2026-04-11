@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-04-11
+
+- [2.10.0] Move all decorator to own file ```decorator.js```
+- [2.10.0] Add new decorator ```req.getSetting()```
+
 ## 2026-03-15
 
 - [2.9.2] Bug fix missing default ```favicon.png```

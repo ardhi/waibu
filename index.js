@@ -12,6 +12,7 @@ import handleError from './lib/handle-error.js'
 import handleNotFound from './lib/handle-not-found.js'
 import handleHome from './lib/handle-home.js'
 import queryString from 'query-string'
+import decorate from './lib/decorate.js'
 
 /**
  * @typedef TEscapeChars
@@ -181,13 +182,8 @@ async function factory (pkgName) {
       cfg.factory.querystringParser = str => this.qs.parse(str)
 
       this.instance = fastify(cfg.factory)
-      this.instance.decorateRequest('lang', null)
-      this.instance.decorateRequest('t', () => {})
-      this.instance.decorateRequest('format', () => {})
-      this.instance.decorateRequest('langDetector', null)
-      this.instance.decorateRequest('site', null)
-      this.instance.decorateRequest('ns', null)
       this.routes = this.routes || []
+      await decorate.call(this)
       await runHook('waibu:afterCreateContext', this.instance)
       await this.instance.register(sensible)
       if (cfg.underPressure) await this.instance.register(underPressure)
