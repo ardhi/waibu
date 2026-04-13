@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-04-13
+
+- [2.11.0] Add ```getSetting()```
+- [2.11.0] ```req.getSetting()``` now accept setting ```site.setting``` too
+
 ## 2026-04-11
 
 - [2.10.0] Move all decorator to own file ```decorator.js```

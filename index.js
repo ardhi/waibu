@@ -579,6 +579,17 @@ async function factory (pkgName) {
       })
       return result.join(delimiter)
     }
+
+    getSetting = (key, { defValue, req = {} } = {}) => {
+      const { breakNsPath } = this.app.bajo
+      const { get } = this.app.lib._
+      let { ns, path } = breakNsPath(key)
+      const paths = path.replaceAll('/', '.').split('.')
+      if (paths[0] === '') paths.shift()
+      path = paths.join('.')
+      const cfgValue = get(this.app, `${ns}.config.${path}`, defValue)
+      return get(req, `site.setting.${ns}.${path}`, cfgValue)
+    }
   }
 
   return Waibu
