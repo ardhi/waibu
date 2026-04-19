@@ -582,13 +582,16 @@ async function factory (pkgName) {
 
     getSetting = (key, { defValue, req = {} } = {}) => {
       const { breakNsPath } = this.app.bajo
-      const { get } = this.app.lib._
+      const { get, isPlainObject, isArray } = this.app.lib._
+      const { defaultsDeep } = this.app.lib.aneka
       let { ns, path } = breakNsPath(key)
       const paths = path.replaceAll('/', '.').split('.')
       if (paths[0] === '') paths.shift()
       path = paths.join('.')
-      const cfgValue = get(this.app, `${ns}.config.${path}`, defValue)
-      return get(req, `site.setting.${ns}.${path}`, cfgValue)
+      const cfgValue = get(this.app, `${ns}.config.${path}`)
+      const reqValue = get(req, `site.setting.${ns}.${path}`)
+      if (isPlainObject(cfgValue) || isArray(cfgValue)) return defaultsDeep({}, reqValue, cfgValue, defValue)
+      return reqValue ?? cfgValue ?? defValue
     }
   }
 

@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-04-19
+
+- [2.11.1] Bug fix in ```getSetting()```
+- [2.11.1] Bug fix in ```decorate.js```
+
 ## 2026-04-13
 
 - [2.11.0] Add ```getSetting()```
