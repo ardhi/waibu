@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-03
+
+- [2.11.2] Bug fix in ```handle-not-found.js```
+
 ## 2026-04-19
 
 - [2.11.1] Bug fix in ```getSetting()```
