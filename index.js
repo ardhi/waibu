@@ -242,8 +242,12 @@ async function factory (pkgName) {
      * @param {string} text
      * @returns {string}
      */
-    escape = (text = '') => {
-      if (typeof text !== 'string') return text
+    escape = (text) => {
+      const { isSet } = this.app.lib.aneka
+      const { isArray, isPlainObject, cloneDeep } = this.app.lib._
+      if (!isSet(text)) return ''
+      if (isArray(text) || isPlainObject(text)) text = JSON.stringify(cloneDeep(text))
+      else text = text + ''
       const { forOwn } = this.app.lib._
       forOwn(this.escapeChars, (v, k) => {
         text = text.replaceAll(k, v)

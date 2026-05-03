@@ -3,6 +3,7 @@
 ## 2026-05-03
 
 - [2.11.2] Bug fix in ```handle-not-found.js```
+- [2.11.3] Bug fix in ```escape()```
 
 ## 2026-04-19
 
