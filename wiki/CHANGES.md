@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-11
+
+- [2.11.4] Bug fix in ```handle-not-found.js```
+
 ## 2026-05-03
 
 - [2.11.2] Bug fix in ```handle-not-found.js```
