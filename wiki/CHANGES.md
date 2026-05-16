@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-05-16
+
+- [2.12.0] Change in ```routeDir()```
+- [2.12.0] Change in ```routePath()```
+
 ## 2026-05-11
 
 - [2.11.4] Bug fix in ```handle-not-found.js```

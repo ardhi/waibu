@@ -449,12 +449,13 @@ async function factory (pkgName) {
     /**
      * Get route path by route's name:
      * - If it is a ```mailto:``` or ```tel:``` url, it returns as is
+     * - If it starts with ```:/```, name will be prefixed with its ```ns``` automatically
      * - If it is a ns based name, it will be parsed first
      *
      * @method
      * @param {string} name
      * @param {Object} [options={}] - Options object
-     * @param {string} [options.base=waibu] - Base namespace
+     * @param {string} [options.ns=waibu] - Base namespace
      * @param {boolean} [options.guessHost] - If true, guest host if host is not set
      * @param {Object} [options.query={}] - Query string's object. If provided, it will be added to returned value
      * @param {Object} [options.params={}] - Parameter object. If provided, it will be merged to returned value
@@ -465,12 +466,13 @@ async function factory (pkgName) {
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
-      const { query = {}, base = this.ns, params = {}, guessHost, defaults = {} } = options
+      const { query = {}, ns = this.ns, params = {}, guessHost, defaults = {}, uriEncoded } = options
 
-      const plugin = getPlugin(base)
+      const plugin = getPlugin(ns)
       const cfg = plugin.config ?? {}
       let info = {}
       if (name.startsWith('mailto:') || name.startsWith('tel:')) return name
+      if (name.slice(0, 2) === ':/') name = ns + name
       if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
       else if (['~'].includes(name[0])) info.path = name.slice(1)
       else {
@@ -491,7 +493,7 @@ async function factory (pkgName) {
       let url = info.path
       const langDetector = get(cfg, 'intl.detectors', [])
       if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
-      if (options.uriEncoded) url = url.split('/').map(u => encodeURI(u)).join('/')
+      if (uriEncoded) url = url.split('/').map(u => encodeURI(u)).join('/')
       info.qs = defaultsDeep({}, query, info.qs)
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
       if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
