@@ -36,12 +36,12 @@ const onResponse = {
     if (elapsed < 1000) tc = 'yellow'
     if (elapsed < 500) tc = 'green'
     const time = plain ? elapsed.toFixed(2) : chalk[tc](elapsed.toFixed(2))
-    if (this.config.deferLog) {
+    if (this.config.log.defer) {
       this.reqLog = this.reqLog ?? {}
-      if (this.reqLog[req.id]) this.app[ns].log.info(this.reqLog[req.id])
+      if (this.reqLog[req.id] && !this.config.log.noReq) this.app[ns].log.info(this.reqLog[req.id])
       delete this.reqLog[req.id]
     }
-    this.app[ns].log[level]('httpResp%s%s%s%s%s', arrow, method, url, state, time)
+    if (!this.config.log.noReply) this.app[ns].log[level]('httpResp%s%s%s%s%s', arrow, method, url, state, time)
   }
 }
 

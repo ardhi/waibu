@@ -18,10 +18,10 @@ const onRequest = {
     const ip = plain ? this.getIp(req) : chalk.magenta(this.getIp(req))
     let msg = this.app[ns].t('httpReq%s%s%s%s', arrow, method, url.replaceAll('%', '%%'), ip)
     if (req.headers['content-length']) msg += this.app[ns].t('httpReqExt%s', req.headers['content-length'])
-    if (this.config.deferLog) {
+    if (this.config.log.defer) {
       this.reqLog = this.reqLog ?? {}
       this.reqLog[req.id] = msg
-    } else this.app[ns].log.info(msg)
+    } else if (!this.config.log.noReq) this.app[ns].log.info(msg)
     if (Object.keys(this.config.paramsCharMap).length === 0) return
     for (const key in req.params) {
       let val = req.params[key]

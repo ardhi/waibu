@@ -91,7 +91,11 @@ async function factory (pkgName) {
         intl: {
           detectors: ['qs']
         },
-        deferLog: false,
+        log: {
+          noReq: false,
+          noReply: false,
+          defer: false
+        },
         prefixVirtual: '~',
         qsKey: {
           bbox: 'bbox',
@@ -215,9 +219,9 @@ async function factory (pkgName) {
      * @param {string} name - ns based route name
      * @returns {Object} Route object
      */
-    findRoute = (name) => {
+    findRoute = (name, method = 'GET') => {
       const { outmatch } = this.app.lib
-      const { find } = this.app.lib._
+      const { find, isString } = this.app.lib._
       const { breakNsPath } = this.app.bajo
       let { ns, subNs = '', path } = breakNsPath(name)
       const params = path.split('|')
@@ -227,7 +231,8 @@ async function factory (pkgName) {
         r.config = r.config ?? {}
         const match = outmatch(r.config.pathSrc ?? r.path, { separator: false })
         if (!match(path)) return false
-        return ns === r.config.ns && r.config.subNs === subNs
+        const methods = isString(r.method) ? [r.method] : r.method
+        return ns === r.config.ns && r.config.subNs === subNs && methods.includes(method)
       })
     }
 

@@ -1,5 +1,13 @@
 # Changes
 
+## 2026-05-22
+
+- [2.13.0] Add ```config.log.noReq``` & ```config.log.noReply```
+- [2.13.0] Change ```config.deferLog``` to ```config.log.defer```
+- [2.13.0] Bug fix in ```build-Locals.js```
+- [2.13.0] Add ```decorator.te```
+- [2.13.0] Bug fix in ```handle-error.js```
+
 ## 2026-05-16
 
 - [2.12.0] Change in ```routeDir()```
