@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-05-24
+
+- [2.14.0] Add auto detection of theme & iconset for all widgets incl the dynamic one
+- [2.14.0] Bug fix in ```handle-error.js```
+
 ## 2026-05-22
 
 - [2.13.0] Add ```config.log.noReq``` & ```config.log.noReply```
