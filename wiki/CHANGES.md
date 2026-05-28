@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-05-28
+
+- [2.15.0] Change hooks to be written in one ```hook.js``` file
+- [2.15.0] Change model schemas to be written in one ```model.js``` file
+
 ## 2026-05-24
 
 - [2.14.0] Add auto detection of theme & iconset for all widgets incl the dynamic one
