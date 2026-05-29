@@ -3,6 +3,7 @@
 ## 2026-05-29
 
 - [2.15.1] Bug fix in ```build-locals.js```
+- [2.15.2] Bug fix in ```hook.js```
 
 ## 2026-05-28
 
