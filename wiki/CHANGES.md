@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-29
+
+- [2.15.1] Bug fix in ```build-locals.js```
+
 ## 2026-05-28
 
 - [2.15.0] Change hooks to be written in one ```hook.js``` file
