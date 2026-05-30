@@ -92,8 +92,7 @@ async function factory (pkgName) {
           detectors: ['qs']
         },
         log: {
-          noReq: false,
-          noReply: false,
+          disable: [],
           defer: false
         },
         prefixVirtual: '~',
@@ -161,6 +160,8 @@ async function factory (pkgName) {
      * @async
      */
     init = async () => {
+      const { isString } = this.app.lib._
+      if (isString(this.config.log.disable)) this.config.log.disable = [this.config.log.disable]
       if (this.config.home === '/') this.config.home = false
       await collectRoutePathHandlers.call(this)
     }
