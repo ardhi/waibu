@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-06-03
+
+- [2.16.1] Bug fix in ```handle-redirect.js```
+
 ## 2026-05-30
 
 - [2.16.0] Change ```config.log.[noReq|noReply]``` to array ```config.log.disable``` with possible values: ```request``` and ```response```. Defaults to empty values
