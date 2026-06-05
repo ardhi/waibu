@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-06-05
+
+- [2.16.2] Bug fix in ```build-locals.js```
+- [2.16.2] Bug fix in ```handle-not-found.js```
+
 ## 2026-06-03
 
 - [2.16.1] Bug fix in ```handle-redirect.js```
