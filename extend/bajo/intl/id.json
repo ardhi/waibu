@@ -8,7 +8,7 @@
   "bootApp%s": "Jalankan aplikasi: %s",
   "cantParseXmlBodyWithout%s": "Tidak bisa memparse bodi XML sebelum paket '%s' dimuat terlebih dahulu",
   "routesL": "jalur",
-  "routeDisabled%s%s": "Jalur %s (%s) dimatikan",
+  "routeDisabled%s": "Jalur '%s' dimatikan",
   "rerouted%s%s": "Jalur dipindahkan %s -> %s",
   "bootSubApp%s": "Boot sub app: %s",
   "routeNotFound%s%s": "Jalur '%s (%s)' tidak ditemukan",

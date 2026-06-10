@@ -1,5 +1,12 @@
 # Changes
 
+## 2026-06-10
+
+- [2.17.0] Add ```config.print```
+- [2.17.0] Bug fix in ```factory.routeOptions```
+- [2.17.0] Add support for inversed route in ```routePath()```
+- [2.17.0] Disabled routes now handled directly by ```waibu```, not its web apps
+
 ## 2026-06-05
 
 - [2.16.2] Bug fix in ```build-locals.js```

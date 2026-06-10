@@ -110,7 +110,10 @@ async function factory (pkgName) {
           lang: 'lang'
         },
         paramsCharMap: {},
-        printRoutes: true,
+        route: {
+          print: true,
+          disabled: []
+        },
         pageTitleFormat: '%s : %s',
         siteInfo: {
           title: 'My Website',
@@ -184,7 +187,7 @@ async function factory (pkgName) {
       }
       cfg.factory.genReqId = req => generateId()
       cfg.factory.disableRequestLogging = true
-      cfg.factory.querystringParser = str => this.qs.parse(str)
+      cfg.factory.routerOptions.querystringParser = str => this.qs.parse(str)
 
       this.instance = fastify(cfg.factory)
       this.routes = this.routes || []
@@ -201,7 +204,7 @@ async function factory (pkgName) {
       await handleHome.call(this)
       await handleNotFound.call(this)
       await this.instance.listen(cfg.server)
-      if (cfg.printRoutes) printRoutes.call(this)
+      if (cfg.route.print) printRoutes.call(this)
     }
 
     /**
@@ -477,7 +480,9 @@ async function factory (pkgName) {
       const plugin = getPlugin(ns)
       const cfg = plugin.config ?? {}
       let info = {}
+      const neg = name[0] === '!'
       if (name.startsWith('mailto:') || name.startsWith('tel:')) return name
+      if (neg) name = name.slice(1)
       if (name.slice(0, 2) === ':/') name = ns + name
       if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
       else if (['~'].includes(name[0])) info.path = name.slice(1)
@@ -485,8 +490,8 @@ async function factory (pkgName) {
         info = breakNsPath(name)
       }
       if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
-      if (this.routePathHandlers[info.subNs]) return this.routePathHandlers[info.subNs].handler(name, options)
-      if (info.path.includes('//')) return info.path
+      if (this.routePathHandlers[info.subNs]) return (neg ? '!' : '') + this.routePathHandlers[info.subNs].handler(name, options)
+      if (info.path.includes('//')) return (neg ? '!' : '') + info.path
 
       info.path = info.path.split('/').map(p => {
         if (!(p[0] === ':' || (p[0] === '{' && p[p.length - 1] === '}'))) return p
@@ -503,7 +508,7 @@ async function factory (pkgName) {
       info.qs = defaultsDeep({}, query, info.qs)
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
       if (!url.startsWith('http') && guessHost) url = `http://${this.config.server.host}:${this.config.server.port}/${trimStart(url, '/')}`
-      return url
+      return (neg ? '!' : '') + url
     }
 
     /**
@@ -604,6 +609,16 @@ async function factory (pkgName) {
       const reqValue = get(req, `site.setting.${ns}.${path}`)
       if (isPlainObject(cfgValue) || isArray(cfgValue)) return defaultsDeep({}, reqValue, cfgValue, defValue)
       return reqValue ?? cfgValue ?? defValue
+    }
+
+    isRouteDisabled = (path, warning = true) => {
+      const { outmatch } = this.app.lib
+      path = this.routePath(path)
+      const result = this.config.route.disabled.find(item => {
+        return outmatch(this.routePath(item))(path)
+      })
+      if (result && warning) this.log.warn('routeDisabled%s', path)
+      return result
     }
   }
 
