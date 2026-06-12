@@ -394,10 +394,9 @@ async function factory (pkgName) {
      * @returns {(Object|Array)} - Returns object if ```returnDir``` is ```true```, array of files otherwise
      */
     getUploadedFiles = async (reqId, fileUrl = false, returnDir = false) => {
-      const { getPluginDataDir } = this.app.bajo
       const { resolvePath } = this.app.lib.aneka
       const { fastGlob } = this.app.lib
-      const dir = `${getPluginDataDir(this.ns)}/upload/${reqId}`
+      const dir = `${this.app.getPluginDataDir(this.ns)}/upload/${reqId}`
       const result = await fastGlob(`${dir}/*`)
       if (!fileUrl) return returnDir ? { dir, files: result } : result
       const files = result.map(f => resolvePath(f, true))
@@ -471,13 +470,12 @@ async function factory (pkgName) {
      * @returns {string}
      */
     routePath = (name = '', options = {}) => {
-      const { getPlugin } = this.app.bajo
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, ns = this.ns, params = {}, guessHost, defaults = {}, uriEncoded } = options
 
-      const plugin = getPlugin(ns)
+      const plugin = this.app.getPlugin(ns)
       const cfg = plugin.config ?? {}
       let info = {}
       const neg = name[0] === '!'
