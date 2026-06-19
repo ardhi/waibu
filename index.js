@@ -485,7 +485,7 @@ async function factory (pkgName) {
       if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
       else if (['~'].includes(name[0])) info.path = name.slice(1)
       else {
-        info = breakNsPath(name)
+        info = breakNsPath(name, false)
       }
       if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
       if (this.routePathHandlers[info.subNs]) return (neg ? '!' : '') + this.routePathHandlers[info.subNs].handler(name, options)
@@ -603,9 +603,10 @@ async function factory (pkgName) {
       const paths = path.replaceAll('/', '.').split('.')
       if (paths[0] === '') paths.shift()
       path = paths.join('.')
-      const cfgValue = get(this.app, `${ns}.config.${path}`)
-      const reqValue = get(req, `site.setting.${ns}.${path}`)
-      if (isPlainObject(cfgValue) || isArray(cfgValue)) return defaultsDeep({}, reqValue, cfgValue, defValue)
+      const cfgValue = get(this.app, `${ns}.config.${path}`, defValue)
+      const reqValue = get(req, `site.setting.${ns}.${path}`, defValue)
+      if (isPlainObject(cfgValue)) return defaultsDeep({}, reqValue, cfgValue)
+      if (isArray(cfgValue)) return reqValue.length > 0 ? reqValue : cfgValue
       return reqValue ?? cfgValue ?? defValue
     }
 

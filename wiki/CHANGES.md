@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-06-19
+
+- [2.18.1] Bug fix in ```routePath()```
+- [2.18.1] Bug fix in ```req.getSetting()```
+
 ## 2026-06-12
 
 - [2.18.0] Necessary updates to ```bajo@2.18.0``` specs
