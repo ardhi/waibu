@@ -76,7 +76,7 @@ async function factory (pkgName) {
        * @type {Object}
        */
       this.config = {
-        home: undefined,
+        home: {},
         server: {
           host: '127.0.0.1',
           port: 17845
@@ -165,7 +165,6 @@ async function factory (pkgName) {
     init = async () => {
       const { isString } = this.app.lib._
       if (isString(this.config.log.disable)) this.config.log.disable = [this.config.log.disable]
-      if (this.config.home === '/') this.config.home = false
       await collectRoutePathHandlers.call(this)
     }
 
