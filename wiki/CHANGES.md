@@ -8,6 +8,7 @@
 - [2.19.0] Simplify ```config.home``` to only accept object
 - [2.19.0] Add ```options.redirectCode``` to ```reply.redirectTo()```
 - [2.19.0] Home route config now read from ```req.getSetting()```
+- [2.19.1] Bug fix in ```handle-error.js```
 
 ## 2026-06-12
 
