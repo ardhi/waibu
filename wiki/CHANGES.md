@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-06-20
+
+- [2.20.0] Add ```req.webApp``` decorator
+- [2.20.0] Rename wrongly ```400.html``` to ```404.html``` template file
+
 ## 2026-06-19
 
 - [2.18.1] Bug fix in ```routePath()```
