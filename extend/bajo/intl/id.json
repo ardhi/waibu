@@ -20,6 +20,6 @@
   "pageNotFound": "Halaman Tidak Ditemukan",
   "pageNotFoundDesc": "Maaf, halaman yang akan Anda tuju tidak bisa ditemukan dimanapun!",
   "accessDenied": "Akses Ditolak",
-  "accessDeniedDesc": "Maaf, Anda tidak memiliki izin untuk mengakses halaman ini!",
+  "accessDeniedDesc": "Maaf, Anda tidak memiliki izin untuk mengakses halaman ini atau melakukan tindakan ini!",
   "internalServerErrorDesc": "Maaf, terjadi kesalahan di pihak kami. Silakan coba lagi nanti atau hubungi dukungan jika masalah ini terus berlanjut."
 }

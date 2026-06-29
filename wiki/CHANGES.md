@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-06-29
+
+- [2.21.0] Add ```config.exposeError```
+
 ## 2026-06-20
 
 - [2.20.0] Add ```req.webApp``` decorator

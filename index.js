@@ -130,6 +130,7 @@ async function factory (pkgName) {
             fileSize: 10485760
           }
         },
+        exposeError: undefined,
         underPressure: false,
         forwardOpts: {
           disableRequestLogging: true,
@@ -164,8 +165,10 @@ async function factory (pkgName) {
      */
     init = async () => {
       const { isString } = this.app.lib._
+      const { isSet } = this.app.lib.aneka
       if (isString(this.config.log.disable)) this.config.log.disable = [this.config.log.disable]
       await collectRoutePathHandlers.call(this)
+      if (!isSet(this.config.exposeError)) this.config.exposeError = this.app.bajo.config.env === 'dev'
     }
 
     /**
@@ -472,7 +475,7 @@ async function factory (pkgName) {
       const { defaultsDeep } = this.app.lib.aneka
       const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
-      const { query = {}, ns = this.ns, params = {}, guessHost, defaults = {}, uriEncoded } = options
+      const { query = {}, ns = this.ns, params = {}, guessHost, defaults = {}, uriEncoded, throwError = false } = options
 
       const plugin = this.app.getPlugin(ns)
       const cfg = plugin.config ?? {}
@@ -484,7 +487,7 @@ async function factory (pkgName) {
       if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
       else if (['~'].includes(name[0])) info.path = name.slice(1)
       else {
-        info = breakNsPath(name, false)
+        info = breakNsPath(name, throwError)
       }
       if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
       if (this.routePathHandlers[info.subNs]) return (neg ? '!' : '') + this.routePathHandlers[info.subNs].handler(name, options)
