@@ -666,7 +666,7 @@ async function factory (pkgName) {
       this.instance.setErrorHandler(async function (err, req, reply) {
         if (err.message === '_notFound' || err.statusCode === 404) return await notFound.call(me, err, req, reply)
         if (err.message === '_redirect' && err.path) return redirect.call(me, err, req, reply)
-        this.log.error(err)
+        me.log.error(err)
         const resp = await interceptor.call(me, 'error', err, req, reply)
         if (resp) return resp
         const payload = {

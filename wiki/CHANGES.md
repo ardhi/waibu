@@ -3,6 +3,7 @@
 ## 2026-11-10
 
 - [2.32.0] Remove `config.mountMainAsRoot`
+- [2.32.1] Bug fix in `_handleError()`
 
 ## 2026-08-30
 
