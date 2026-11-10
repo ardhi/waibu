@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-11-10
+
+- [2.32.0] Remove `config.mountMainAsRoot`
+
 ## 2026-08-30
 
 - [2.31.0] Add `config.server.disabled` defaults to `false` to disable the web server

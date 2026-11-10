@@ -338,11 +338,7 @@ async function factory (pkgName) {
      */
     getPluginPrefix = (name, webApp = 'waibuMpa') => {
       const { get, trim } = this.app.lib._
-      let prefix = get(this, `app.${name}.config.${webApp}.prefix`, get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias))
-      if (name === 'main') {
-        const cfg = this.app[webApp].config
-        if (cfg.mountMainAsRoot) prefix = ''
-      }
+      const prefix = get(this, `app.${name}.config.${webApp}.prefix`, get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias))
       return trim(prefix, '/')
     }
 
@@ -427,8 +423,6 @@ async function factory (pkgName) {
       const cfg = this.app[baseNs].config
       const prefix = get(cfg, 'waibu.prefix', this.app[baseNs].alias)
       const dir = prefix === '' ? '' : `/${prefix}`
-      const cfgMpa = get(this, 'app.waibuMpa.config')
-      if (ns === this.app.mainNs && cfgMpa.mountMainAsRoot) return ''
       if (ns === baseNs) return dir
       return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
     }
@@ -796,6 +790,12 @@ async function factory (pkgName) {
         await runHook(`${this.ns}.${m.ns}:afterAppBoot`)
       }
       await runHook(`${this.ns}:afterAppBoot`)
+    }
+
+    cleanPath = (path = '') => {
+      const { trimEnd } = this.app.lib._
+      path = trimEnd(path.replace(/\/+$/, ''))
+      return path === '' ? '/' : path
     }
   }
 
