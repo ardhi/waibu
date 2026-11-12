@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-11-12
+
+- [2.32.2] Bug fix in `getPluginPrefix()`
+- [2.32.2] Bug fix in `cleanPath()`
+
 ## 2026-11-10
 
 - [2.32.0] Remove `config.mountMainAsRoot`

@@ -334,11 +334,13 @@ async function factory (pkgName) {
      * @method
      * @param {string} name - Plugin's name
      * @param {string} [webApp=waibuMpa] - Web app to use
+     * @param {boolean} [allowEmpty=false] - If `false`, will fallback to plugin's alias when prefix is empty
      * @returns {string}
      */
-    getPluginPrefix = (name, webApp = 'waibuMpa') => {
-      const { get, trim } = this.app.lib._
-      const prefix = get(this, `app.${name}.config.${webApp}.prefix`, get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias))
+    getPluginPrefix = (name, webApp = 'waibuMpa', allowEmpty = false) => {
+      const { get, trim, isEmpty } = this.app.lib._
+      let prefix = get(this, `app.${name}.config.${webApp}.prefix`, get(this, `app.${name}.config.waibu.prefix`, this.app[name].alias))
+      if (isEmpty(prefix) && !allowEmpty) prefix = this.app[name].alias
       return trim(prefix, '/')
     }
 
@@ -410,24 +412,6 @@ async function factory (pkgName) {
     }
 
     /**
-     * Get route directory by plugin's name
-     *
-     * @method
-     * @param {*} ns - Namespace
-     * @param {*} [baseNs] - Base namespace. If not provided, defaults to scope's ns
-     * @returns {string}
-     */
-    routeDir = (ns, baseNs) => {
-      const { get } = this.app.lib._
-      if (!baseNs) baseNs = ns
-      const cfg = this.app[baseNs].config
-      const prefix = get(cfg, 'waibu.prefix', this.app[baseNs].alias)
-      const dir = prefix === '' ? '' : `/${prefix}`
-      if (ns === baseNs) return dir
-      return dir + `/${get(this.app[ns].config, 'waibu.prefix', this.app[ns].alias)}`
-    }
-
-    /**
      * Get route path by route's name:
      * - If it is a ```mailto:``` or ```tel:``` url, it returns as is
      * - If it starts with ```:/```, name will be prefixed with its ```ns``` automatically
@@ -474,7 +458,10 @@ async function factory (pkgName) {
       }).join('/')
       let url = info.path
       const langDetector = get(cfg, 'intl.detectors', [])
-      if (info.ns) url = trimEnd(langDetector.includes('path') ? `/${params.lang ?? ''}${this.routeDir(info.ns)}${info.path}` : `${this.routeDir(info.ns)}${info.path}`, '/')
+      if (info.ns) {
+        url = this.getPluginPrefix(info.ns, undefined, true) + '/' + info.path
+        url = this.cleanPath(langDetector.includes('path') ? `/${params.lang ?? ''}${url}` : url)
+      }
       if (uriEncoded) url = url.split('/').map(u => encodeURI(u)).join('/')
       info.qs = defaultsDeep({}, query, info.qs)
       if (!isEmpty(info.qs)) url += '?' + this.qs.stringify(info.qs)
@@ -792,10 +779,16 @@ async function factory (pkgName) {
       await runHook(`${this.ns}:afterAppBoot`)
     }
 
+    /**
+     * Clean the given path by removing trailing slashes and ensuring it starts with a single slash.
+     * @param {string} path - The path to clean
+     * @returns {string} - The cleaned path
+     */
     cleanPath = (path = '') => {
       const { trimEnd } = this.app.lib._
-      path = trimEnd(path.replace(/\/+$/, ''))
-      return path === '' ? '/' : path
+      path = trimEnd(path.replace(/\/{2,}/g, '/'))
+      if (!path.startsWith('/')) path = `/${path}`
+      return path
     }
   }
 
