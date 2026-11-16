@@ -3,6 +3,7 @@
 ## 2026-11-16
 
 - [2.32.3] Bug fix in `build-locals.js`
+- [2.32.4] Bug fix in `build-locals.js`
 
 ## 2026-11-12
 

@@ -21,5 +21,6 @@
   "pageNotFoundDesc": "Sorry, the page you're looking for is nowhere to be found!",
   "accessDenied": "Access Denied",
   "accessDeniedDesc": "Sorry, you don't have permission to access this page or to perform this action!",
-  "internalServerErrorDesc": "Sorry, something went wrong on our end. Please try again later or contact support if the problem persists."
+  "internalServerErrorDesc": "Sorry, something went wrong on our end. Please try again later or contact support if the problem persists.",
+  "browserNotSupported": "Your browser does not support the video tag"
 }
