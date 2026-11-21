@@ -428,7 +428,7 @@ async function factory (pkgName) {
      */
     routePath = (name = '', options = {}) => {
       const { defaultsDeep } = this.app.lib.aneka
-      const { isEmpty, get, trimEnd, trimStart } = this.app.lib._
+      const { isEmpty, get, trimStart } = this.app.lib._
       const { breakNsPath } = this.app.bajo
       const { query = {}, ns = this.ns, params = {}, guessHost, defaults = {}, uriEncoded, throwError = false } = options
 
@@ -442,6 +442,7 @@ async function factory (pkgName) {
       if (['%', '.', '/', '?', '#'].includes(name[0]) || name.slice(1, 2) === ':') info.path = name
       else if (['~'].includes(name[0])) info.path = name.slice(1)
       else {
+        name = this.cleanPath(name, { firstSlash: false })
         info = breakNsPath(name, throwError)
       }
       if (info.path.slice(0, 2) === './') info.path = info.path.slice(2)
@@ -456,7 +457,7 @@ async function factory (pkgName) {
         if (defaults[p]) return defaults[p]
         return _p
       }).join('/')
-      let url = info.path
+      let url = this.cleanPath(info.path)
       const langDetector = get(cfg, 'intl.detectors', [])
       if (info.ns) {
         url = this.getPluginPrefix(info.ns, undefined, true) + '/' + info.path
@@ -784,10 +785,11 @@ async function factory (pkgName) {
      * @param {string} path - The path to clean
      * @returns {string} - The cleaned path
      */
-    cleanPath = (path = '') => {
+    cleanPath = (path = '', options = {}) => {
       const { trimEnd } = this.app.lib._
+      const { firstSlash = true } = options
       path = trimEnd(path.replace(/\/{2,}/g, '/'))
-      if (!path.startsWith('/')) path = `/${path}`
+      if (firstSlash && !path.startsWith('/')) path = `/${path}`
       return path
     }
   }

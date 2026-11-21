@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-11-22
+
+- [2.32.5] Bug fix in `build-locals.js`
+- [2.32.5] Bug fix in `routePath()`
+
 ## 2026-11-16
 
 - [2.32.3] Bug fix in `build-locals.js`
