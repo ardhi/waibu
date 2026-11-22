@@ -4,6 +4,7 @@
 
 - [2.32.5] Bug fix in `build-locals.js`
 - [2.32.5] Bug fix in `routePath()`
+- [2.32.6] Bug fix in `routePath()`
 
 ## 2026-11-16
 

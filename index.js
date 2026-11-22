@@ -457,7 +457,7 @@ async function factory (pkgName) {
         if (defaults[p]) return defaults[p]
         return _p
       }).join('/')
-      let url = this.cleanPath(info.path)
+      let url = this.cleanPath(info.path, { firstSlash: false })
       const langDetector = get(cfg, 'intl.detectors', [])
       if (info.ns) {
         url = this.getPluginPrefix(info.ns, undefined, true) + '/' + info.path
